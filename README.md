@@ -13,4 +13,23 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  * [Ireport Impressão de Relatórios Banco Dados](https://sourceforge.net/projects/ireport/)
  * [Library/Jar SQLITE](https://bitbucket.org/xerial/sqlite-jdbc/downloads/)
  ### Prototipos Interfaces
+ * Interface Login
  
+ 
+ ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-login.PNG)
+ * Interface CRUD(Produtos)
+ 
+ 
+ ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-produtos.PNG)
+ * Interface CRUD(Usúarios)
+ 
+ 
+ ![Tela usuarios](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-usuarios.PNG)
+ * Interface CRUD(Estoque)
+ 
+ 
+ ![Tela Estoque](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-estoque.PNG)
+ * Interface Principal
+ 
+ 
+ ![Tela Principal](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-principal.PNG)
