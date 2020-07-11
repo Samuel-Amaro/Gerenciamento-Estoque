@@ -1,5 +1,9 @@
 package view;
 
+import dao.DAOUsuario;
+import javax.swing.JOptionPane;
+import model.Usuario;
+
 
 public class ViewUsuario extends javax.swing.JFrame {
 
@@ -7,11 +11,56 @@ public class ViewUsuario extends javax.swing.JFrame {
      * Tela De Manipulação de Usuarios.
      * onde pode cadastrar, alterar, excluir usuarios, que vão ter acessos ao sistema.
     */
+    
+    //objeto usuario
+    Usuario userGlobal = new Usuario();
+    
     public ViewUsuario() {
         initComponents();
     }
-
     
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new ViewUsuario().setVisible(true);
+        });
+    }
+    
+    /**
+     * Metodo que vai limpar os componestes do formulario, que vai estar sujo com dados do usuario logado.
+     */
+    private void limparFormulario() {
+       txtCodigoId.setText(null);
+       txtNomeUser.setText(null);
+       txtLoginUser.setText(null);
+       txtSenhaUser.setText(null);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -54,12 +103,18 @@ public class ViewUsuario extends javax.swing.JFrame {
         lblSenha.setForeground(new java.awt.Color(102, 82, 11));
         lblSenha.setText("SENHA");
 
-        btnSalvarCadUser.setBackground(new java.awt.Color(45, 58, 179));
+        txtCodigoId.setEditable(false);
+
         btnSalvarCadUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSalvarCadUser.setForeground(new java.awt.Color(102, 82, 11));
         btnSalvarCadUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/disquete-salvar-usuario-btn.png"))); // NOI18N
         btnSalvarCadUser.setText("SALVAR");
         btnSalvarCadUser.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnSalvarCadUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCadUserActionPerformed(evt);
+            }
+        });
 
         getTbllBancoDados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,6 +238,27 @@ public class ViewUsuario extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(816, 556));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarCadUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadUserActionPerformed
+    
+     //obtendo dados do usuario que esta se cadastrando,dados que fica nos componentes de obtenção de texto, que são os JtextField
+     userGlobal.setNome(txtNomeUser.getText());
+     userGlobal.setLogin(txtLoginUser.getText());
+     userGlobal.setSenha(txtSenhaUser.getText());
+     //passando usuario para o metodo que salva um usuario no banco de dados
+     DAOUsuario salvaNovoUser = new DAOUsuario();
+    
+     //se retorna true, e porque ocorreu tudo corretamente
+     if(salvaNovoUser.salvarUsuario(userGlobal)) {
+         JOptionPane.showMessageDialog(null,"Usuario Cadastrado Com Sucesso!","Sucesso Cadastro",JOptionPane.INFORMATION_MESSAGE);
+         //depois de salvar o usuario no banco de dados, vou limpar os dados do formulario
+         limparFormulario();
+     }else{
+         JOptionPane.showMessageDialog(null,"Usuario Não Cadastrado","Error Cadastro Usúario",JOptionPane.ERROR_MESSAGE);
+     }
+     
+     
+    }//GEN-LAST:event_btnSalvarCadUserActionPerformed
 
    
 
