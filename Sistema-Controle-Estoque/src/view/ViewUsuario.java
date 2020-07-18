@@ -1,24 +1,32 @@
 package view;
 
+import controller.ControllerUsuario;
 import dao.DAOUsuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Usuario;
 
-
-public class ViewUsuario extends javax.swing.JFrame {
-
-    /*
+/*
      * Tela De Manipulação de Usuarios.
      * onde pode cadastrar, alterar, excluir usuarios, que vão ter acessos ao sistema.
-    */
-    
-    //objeto usuario
+ */
+public class ViewUsuario extends javax.swing.JFrame {
+
+     
+    //variaveis essenciais
     Usuario userGlobal = new Usuario();
+    List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+    ControllerUsuario cp = new ControllerUsuario();
+    DefaultTableModel tblModeloPadrao;
     
     public ViewUsuario() {
         initComponents();
+        //ja inicia mostrando os usuarios cadastrados
+        listaUsuarios();
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -51,20 +59,40 @@ public class ViewUsuario extends javax.swing.JFrame {
             new ViewUsuario().setVisible(true);
         });
     }
-    
+
     /**
-     * Metodo que vai limpar os componestes do formulario, que vai estar sujo com dados do usuario logado.
+     * Metodo que vai limpar os componestes do formulario, que vai estar sujo
+     * com dados do usuario logado.
      */
     private void limparFormulario() {
-       txtCodigoId.setText(null);
-       txtNomeUser.setText(null);
-       txtLoginUser.setText(null);
-       txtSenhaUser.setText(null);
+        txtCodigoId.setText(null);
+        txtNomeUser.setText(null);
+        txtLoginUser.setText(null);
+        txtSenhaUser.setText(null);
     }
+    
+    
+    private void listaUsuarios() {
+        this.listaUsuarios = cp.getUsuariosControler();
+        //pegando a Jtable e trasformando ela para um modelo padrão de tabela
+        tblModeloPadrao = (DefaultTableModel) this.getTbllBancoDados.getModel();
+        int indice;
+        for(indice = 0; indice < this.listaUsuarios.size(); indice += 1 ) {
+            //cada objeto de tipo usuario da lista de usuarios, eu adiciono na tabela, cada linha da tabela e um obejto
+            this.tblModeloPadrao.addRow(new Object[]{
+                                       this.listaUsuarios.get(indice).getCodigoId(),
+                                       this.listaUsuarios.get(indice).getNome(),
+                                       this.listaUsuarios.get(indice).getLogin()
+                                       });
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lblCodigoId = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
@@ -80,6 +108,19 @@ public class ViewUsuario extends javax.swing.JFrame {
         btnLimparDadosTela = new javax.swing.JButton();
         btnAlterarDadosUser = new javax.swing.JButton();
         btnExcluirDadosUser = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Informações Usúarios");
@@ -240,27 +281,26 @@ public class ViewUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarCadUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadUserActionPerformed
-    
-     //obtendo dados do usuario que esta se cadastrando,dados que fica nos componentes de obtenção de texto, que são os JtextField
-     userGlobal.setNome(txtNomeUser.getText());
-     userGlobal.setLogin(txtLoginUser.getText());
-     userGlobal.setSenha(txtSenhaUser.getText());
-     //passando usuario para o metodo que salva um usuario no banco de dados
-     DAOUsuario salvaNovoUser = new DAOUsuario();
-    
-     //se retorna true, e porque ocorreu tudo corretamente
-     if(salvaNovoUser.salvarUsuario(userGlobal)) {
-         JOptionPane.showMessageDialog(null,"Usuario Cadastrado Com Sucesso!","Sucesso Cadastro",JOptionPane.INFORMATION_MESSAGE);
-         //depois de salvar o usuario no banco de dados, vou limpar os dados do formulario
-         limparFormulario();
-     }else{
-         JOptionPane.showMessageDialog(null,"Usuario Não Cadastrado","Error Cadastro Usúario",JOptionPane.ERROR_MESSAGE);
-     }
-     
-     
-    }//GEN-LAST:event_btnSalvarCadUserActionPerformed
 
-   
+        //obtendo dados do usuario que esta se cadastrando,dados que fica nos componentes de obtenção de texto, que são os JtextField
+        userGlobal.setNome(txtNomeUser.getText());
+        userGlobal.setLogin(txtLoginUser.getText());
+        userGlobal.setSenha(txtSenhaUser.getText());
+        //passando usuario para o metodo que salva um usuario no banco de dados
+        DAOUsuario salvaNovoUser = new DAOUsuario();
+
+        //se retorna true, e porque ocorreu tudo corretamente
+        if (salvaNovoUser.salvarUsuario(userGlobal)) {
+            JOptionPane.showMessageDialog(null, "Usuario Cadastrado Com Sucesso!", "Sucesso Cadastro", JOptionPane.INFORMATION_MESSAGE);
+            //depois de salvar o usuario no banco de dados, vou limpar os dados do formulario
+            limparFormulario();
+            //e ja mostro a lista de usuarios cadastrados atualizada
+            listaUsuarios();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario Não Cadastrado", "Error Cadastro Usúario", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalvarCadUserActionPerformed
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarDadosUser;
@@ -270,6 +310,8 @@ public class ViewUsuario extends javax.swing.JFrame {
     private javax.swing.JTable getTbllBancoDados;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCodigoId;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblNome;

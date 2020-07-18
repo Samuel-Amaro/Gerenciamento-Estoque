@@ -20,6 +20,7 @@ public class DAOUsuario extends ConexaoSqLite{
     Connection con;
     //variavel que vai armazenar os dados vindo do banco de dados, vão ser muitos dados
      ResultSet rs = null;
+     Usuario user = new Usuario();
      /**
       * 
       * @param novoUsuario
@@ -67,8 +68,9 @@ public class DAOUsuario extends ConexaoSqLite{
      */
     public List<Usuario> getListaUsuario() {
      //criando a lista de usuario, so que vazia
-     List<Usuario> listaUsuarios = new ArrayList<>();
+     List<Usuario> listaUsuarios;
      //criando um obejto usuario que vai receber os dados temporariamente, de um usuario que veio do banco de dados
+     listaUsuarios = new ArrayList<>();
      
      //consulta sql que traz todos os usuarios cadastrados no banco de dados
      String sql = "SELECT * FROM tbl_usuario";
@@ -80,7 +82,7 @@ public class DAOUsuario extends ConexaoSqLite{
             while(rs.next()) {
                   //enquanto tiver dados no rs, faça o seguinte
                   //popule um obejto usuario com os dados
-                  Usuario user = new Usuario();
+                  user = new Usuario();
                   user.setCodigoId(rs.getInt(1)); //codigo id
                   user.setNome(rs.getString(2)); //nome
                   user.setLogin(rs.getString(3));//login
@@ -88,10 +90,11 @@ public class DAOUsuario extends ConexaoSqLite{
                   //populou o objeto, adicione ele a minha lista de usuarios
                   listaUsuarios.add(user);
             }
-            return listaUsuarios;
+            ps.close();
         } catch (SQLException e) {
                 System.out.println("Não foi possivel, busca a lista de usuarios no banco" + e);
                 return null;
-        }  
+        }
+        return listaUsuarios;
     }
 }
