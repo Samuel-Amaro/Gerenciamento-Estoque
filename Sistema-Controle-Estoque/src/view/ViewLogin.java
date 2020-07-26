@@ -1,19 +1,33 @@
 package view;
 
+import controller.ControllerUsuario;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import model.ModelUsuario;
 
 public class ViewLogin extends javax.swing.JFrame {
-
     /*
      * Tela do logim, onde um usuario que deseja usar o sistema, tem que se autenticar.
      * tendo um login e senha para poder usar o sistema.
      * usuario com permissão de acesso que possui login e senha cadastrados no sistema vai poder gerenciar o estoque do sistema.
-    */
+     */
+    
+    //variaveis essenciais
+    Font fonteShaded = null;
+    Font fontePlay = null;
+    ControllerUsuario controleUsuario;
+    ModelUsuario usuario;
+    
     
     public ViewLogin() {
         initComponents();
+        setFonteExterna();
     }
 
-   
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,7 +47,7 @@ public class ViewLogin extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(45, 58, 179));
 
-        lblTitulo.setBackground(new java.awt.Color(0, 10, 102));
+        lblTitulo.setBackground(new java.awt.Color(255, 255, 255));
         lblTitulo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(179, 149, 45));
         lblTitulo.setText("GERENCIADOR DE ESTOQUE");
@@ -46,14 +60,20 @@ public class ViewLogin extends javax.swing.JFrame {
         lblSenha.setForeground(new java.awt.Color(179, 149, 45));
         lblSenha.setText("SENHA");
 
-        btnEntrarSistema.setBackground(new java.awt.Color(255, 255, 255));
-        btnEntrarSistema.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrarSistema.setForeground(new java.awt.Color(179, 149, 45));
         btnEntrarSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icone-entrar-btn-login.png"))); // NOI18N
+        btnEntrarSistema.setText("ENTRAR!");
         btnEntrarSistema.setToolTipText("Entrar No Sistema");
         btnEntrarSistema.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnEntrarSistema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarSistemaActionPerformed(evt);
+            }
+        });
 
-        btnSairSistema.setBackground(new java.awt.Color(255, 255, 255));
+        btnSairSistema.setForeground(new java.awt.Color(179, 149, 45));
         btnSairSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-btn-login-sair.png"))); // NOI18N
+        btnSairSistema.setText("VOLTAR!");
         btnSairSistema.setToolTipText("Sair Do Sistema");
         btnSairSistema.setMinimumSize(new java.awt.Dimension(48, 48));
         btnSairSistema.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -67,49 +87,54 @@ public class ViewLogin extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSairSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEntrarSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblSenha, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblLogin, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtLogin, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpfTxtSenha, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(103, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnSairSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(179, 179, 179)
+                            .addComponent(btnEntrarSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jpfTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addComponent(lblTitulo)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(lblLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(lblSenha)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jpfTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrarSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSairSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLogin))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSenha)
+                    .addComponent(jpfTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSairSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEntrarSistema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setSize(new java.awt.Dimension(562, 353));
@@ -117,13 +142,56 @@ public class ViewLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairSistemaActionPerformed
-        //vai voltar para a tela de boas vindas
-        ViewMascaraEntrada m = new ViewMascaraEntrada();
-        m.setVisible(true);
-        dispose();
+        
     }//GEN-LAST:event_btnSairSistemaActionPerformed
 
-   
+    private void btnEntrarSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarSistemaActionPerformed
+       //vai fazer autenticação de um usuario no sistema
+       if(this.txtLogin.getText().isEmpty() && new String(this.jpfTxtSenha.getPassword()).isEmpty()) {
+           JOptionPane.showMessageDialog(this,"Digite Um Usuario e Senha","Campos Vazios",JOptionPane.WARNING_MESSAGE);
+       }else{
+            this.usuario = new ModelUsuario();
+            this.controleUsuario = new ControllerUsuario();
+            this.usuario =  this.controleUsuario.controlerAutenticarUsuarioLogin(this.txtLogin.getText(),new String(this.jpfTxtSenha.getPassword()));    
+            if(this.usuario != null) {
+                JOptionPane.showMessageDialog(this,"Logado Com Sucesso!","Login Efetuado Com Sucesso",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this,"Usuario e Senha Não Cadastrados!","Erro ao Fazer Logon",JOptionPane.ERROR_MESSAGE);
+            }
+       }
+       
+    }//GEN-LAST:event_btnEntrarSistemaActionPerformed
+    
+    /**
+     * Metodo que seta fontes exernas no frame
+     * Seta uma Fonte de Destaque para uma mensagem inicial, fonte = GrutchShaded.ttf;
+     * SETA UMA FONTE PADRÃO NO FRAME = PlayfairDisplay-ExtraBold.ttf;
+     */
+    private void setFonteExterna() {
+        try {
+            //carregando a fonte de destaque que mostra uma mensagem inicial, uma fonte bem destacada
+            fonteShaded = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("fontes_externas/GrutchShaded.ttf"));
+            //caregando a fonte padrão do frame
+            fontePlay = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("fontes_externas/PlayfairDisplay-ExtraBold.ttf"));
+        } catch (IOException | FontFormatException e) {
+            System.out.println("Não carregou as fonte externa padrão da tela de Login! " + e);
+        }
+        //setando a fonte nos componentes com o estilo e tamanho
+        //setando fonte padrão na label que mostra mensagem de destaque 
+        lblTitulo.setFont(fonteShaded.deriveFont(Font.PLAIN,35));
+        lblTitulo.setOpaque(true);
+        //setando fonte nos labels de informações de caixas de textos
+        lblLogin.setFont(fontePlay.deriveFont(Font.PLAIN,20));
+        lblSenha.setFont(fontePlay.deriveFont(Font.PLAIN,20));
+        //SETANDO FONTE NOS BOTÕES
+        btnEntrarSistema.setFont(fontePlay.deriveFont(Font.PLAIN,17));
+        btnSairSistema.setFont(fontePlay.deriveFont(Font.PLAIN,17));
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(fonteShaded);
+        ge.registerFont(fontePlay);
+        this.setFont(fontePlay);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrarSistema;
@@ -135,4 +203,10 @@ public class ViewLogin extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtLogin;
     // End of variables declaration//GEN-END:variables
+
+    private static class setVisible {
+
+        public setVisible(boolean b) {
+        }
+    }
 }

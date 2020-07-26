@@ -1,4 +1,4 @@
-package dao;
+package utiuls;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

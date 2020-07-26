@@ -2,7 +2,7 @@ package model;
 
 /*Classe que vai controlar o objeto usuario, vai gerar o objeto usuario para as interfaces*/
 
-public class Usuario {
+public class ModelUsuario {
   
 //atributos de um usuario, caracteristicas de um usuario, oque um usuario possui
   private String nome;

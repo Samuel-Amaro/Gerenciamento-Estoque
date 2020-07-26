@@ -2,11 +2,15 @@ package view;
 
 import controller.ControllerUsuario;
 import dao.DAOUsuario;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Usuario;
+import model.ModelUsuario;
 
 /*
      * Tela De Manipulação de Usuarios.
@@ -14,15 +18,19 @@ import model.Usuario;
  */
 public class ViewUsuario extends javax.swing.JFrame {
 
-     
     //variaveis essenciais
-    Usuario userGlobal = new Usuario();
-    List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+    ModelUsuario userGlobal = new ModelUsuario();
+    List<ModelUsuario> listaUsuarios = new ArrayList<ModelUsuario>();
     ControllerUsuario cp = new ControllerUsuario();
     DefaultTableModel tblModeloPadrao;
-    
+    Font fonteExterna = null;
+    //variavel que vai controlar as opções de um usuario, CADASTRAR,ALTERAR, POR PADRÃO JA COMEÇA COM CADASTRO
+    String opcao = null;
+
     public ViewUsuario() {
         initComponents();
+        //setando uma fonte padrão no frame
+        setFontExterna();
         //ja inicia mostrando os usuarios cadastrados
         listaUsuarios();
     }
@@ -69,21 +77,27 @@ public class ViewUsuario extends javax.swing.JFrame {
         txtNomeUser.setText(null);
         txtLoginUser.setText(null);
         txtSenhaUser.setText(null);
+        opcao = "CADASTRAR";
     }
-    
-    
+
+    /**
+     * Metodo que lista Usuarios para mostrar na tabela
+     */
     private void listaUsuarios() {
         this.listaUsuarios = cp.getUsuariosControler();
         //pegando a Jtable e trasformando ela para um modelo padrão de tabela
         tblModeloPadrao = (DefaultTableModel) this.getTbllBancoDados.getModel();
         int indice;
-        for(indice = 0; indice < this.listaUsuarios.size(); indice += 1 ) {
+        //a linha abaixo inicialmente cria 0 linhas na tabela, isso faz ela so inicializar com 0 linhas
+        this.tblModeloPadrao.setNumRows(0);
+        //as linhas abaixo cria linhas de dados na tabela, com os dados dos usuarios cadastrados na tabela
+        for (indice = 0; indice < this.listaUsuarios.size(); indice += 1) {
             //cada objeto de tipo usuario da lista de usuarios, eu adiciono na tabela, cada linha da tabela e um obejto
             this.tblModeloPadrao.addRow(new Object[]{
-                                       this.listaUsuarios.get(indice).getCodigoId(),
-                                       this.listaUsuarios.get(indice).getNome(),
-                                       this.listaUsuarios.get(indice).getLogin()
-                                       });
+                this.listaUsuarios.get(indice).getCodigoId(),
+                this.listaUsuarios.get(indice).getNome(),
+                this.listaUsuarios.get(indice).getLogin()
+            });
         }
     }
 
@@ -134,15 +148,15 @@ public class ViewUsuario extends javax.swing.JFrame {
 
         lblNome.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblNome.setForeground(new java.awt.Color(102, 82, 11));
-        lblNome.setText("NOME COMPLETO");
+        lblNome.setText("NOME COMPLETO *");
 
         lblLogin.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblLogin.setForeground(new java.awt.Color(102, 82, 11));
-        lblLogin.setText("LOGIN");
+        lblLogin.setText("LOGIN *");
 
         lblSenha.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblSenha.setForeground(new java.awt.Color(102, 82, 11));
-        lblSenha.setText("SENHA");
+        lblSenha.setText("SENHA *");
 
         txtCodigoId.setEditable(false);
 
@@ -188,18 +202,33 @@ public class ViewUsuario extends javax.swing.JFrame {
         btnLimparDadosTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-limpar-btn-user.png"))); // NOI18N
         btnLimparDadosTela.setText("LIMPAR");
         btnLimparDadosTela.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnLimparDadosTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparDadosTelaActionPerformed(evt);
+            }
+        });
 
         btnAlterarDadosUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnAlterarDadosUser.setForeground(new java.awt.Color(102, 82, 11));
         btnAlterarDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-editar-user-btn-user.png"))); // NOI18N
         btnAlterarDadosUser.setText("ALTERAR");
         btnAlterarDadosUser.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnAlterarDadosUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarDadosUserActionPerformed(evt);
+            }
+        });
 
         btnExcluirDadosUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnExcluirDadosUser.setForeground(new java.awt.Color(102, 82, 11));
         btnExcluirDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-excluir-user-btn-user.png"))); // NOI18N
         btnExcluirDadosUser.setText("EXCLUIR");
         btnExcluirDadosUser.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnExcluirDadosUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirDadosUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,27 +243,23 @@ public class ViewUsuario extends javax.swing.JFrame {
                             .addComponent(txtCodigoId)
                             .addComponent(lblCodigoId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtLoginUser, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblNome)
-                                .addGap(179, 179, 179)
-                                .addComponent(lblLogin)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNomeUser, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLoginUser, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSenhaUser)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblSenha)
-                                .addGap(0, 142, Short.MAX_VALUE))))
+                            .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnLimparDadosTela, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                         .addComponent(btnAlterarDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                         .addComponent(btnExcluirDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -281,26 +306,154 @@ public class ViewUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarCadUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadUserActionPerformed
-
-        //obtendo dados do usuario que esta se cadastrando,dados que fica nos componentes de obtenção de texto, que são os JtextField
-        userGlobal.setNome(txtNomeUser.getText());
-        userGlobal.setLogin(txtLoginUser.getText());
-        userGlobal.setSenha(txtSenhaUser.getText());
-        //passando usuario para o metodo que salva um usuario no banco de dados
-        DAOUsuario salvaNovoUser = new DAOUsuario();
-
-        //se retorna true, e porque ocorreu tudo corretamente
-        if (salvaNovoUser.salvarUsuario(userGlobal)) {
-            JOptionPane.showMessageDialog(null, "Usuario Cadastrado Com Sucesso!", "Sucesso Cadastro", JOptionPane.INFORMATION_MESSAGE);
-            //depois de salvar o usuario no banco de dados, vou limpar os dados do formulario
-            limparFormulario();
-            //e ja mostro a lista de usuarios cadastrados atualizada
-            listaUsuarios();
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario Não Cadastrado", "Error Cadastro Usúario", JOptionPane.ERROR_MESSAGE);
+        //verificando qual a ação que vou trabalahr aqui no botão salvar
+        switch (this.opcao) {
+            case "CADASTRAR":
+                //antes de salvar um usuario tenho que fazer uma validação nos campos, e ver se foram preenchidos
+                //se os campos nome, senha, logim estiverem vazios eu mando uma mensagem de erro
+                if (this.txtNomeUser.getText().isEmpty() && this.txtLoginUser.getText().isEmpty() && this.txtSenhaUser.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Pre-Encha os Campos Obrigatorios Marcados Com (*)", "Atenção", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    //obtendo dados do usuario que esta se cadastrando,dados que fica nos componentes de obtenção de texto, que são os JtextField
+                    userGlobal.setNome(txtNomeUser.getText());
+                    userGlobal.setLogin(txtLoginUser.getText());
+                    userGlobal.setSenha(txtSenhaUser.getText());
+                    //se retorna true, e porque ocorreu tudo corretamente
+                    if (this.cp.controlerSalvarUsuario(userGlobal)) {
+                        JOptionPane.showMessageDialog(null, "Usuario Cadastrado Com Sucesso!", "Sucesso Cadastro", JOptionPane.INFORMATION_MESSAGE);
+                        //depois de salvar o usuario no banco de dados, vou limpar os dados do formulario
+                        limparFormulario();
+                        //a linha abaixo limpa os dados da tabela add 0 linhas na tabela
+                        this.tblModeloPadrao.setNumRows(0);
+                        //e ja mostro a lista de usuarios cadastrados atualizada
+                        listaUsuarios();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario Não Cadastrado", "Error Cadastro Usúario", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                break;
+            case "ALTERAR":
+                //opção em que vai alterar um cadastro
+                //validação dos campos obrigatorios se estão preenchidos
+                if (this.txtNomeUser.getText().isEmpty() && this.txtLoginUser.getText().isEmpty() && this.txtSenhaUser.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Para Alterar  um Cadastro Pre-Encha os Campos Obrigatorios Marcados Com (*)", "Atenção", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    userGlobal.setCodigoId(Integer.parseInt(txtCodigoId.getText()));
+                    userGlobal.setNome(txtNomeUser.getText());
+                    userGlobal.setLogin(txtLoginUser.getText());
+                    userGlobal.setSenha(txtSenhaUser.getText());
+                    if (this.cp.controlerAlterarCadastroUsuario(userGlobal)) {
+                        JOptionPane.showMessageDialog(null, "Alteração De Cadastro Feita Com Sucesso", "SUCESSO ALTERAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                        limparFormulario();
+                        listaUsuarios();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao Alterar um Cadastro", "ERRO ALTERAÇÃO", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Opção Não Encontrada");
+                break;
         }
+
+
     }//GEN-LAST:event_btnSalvarCadUserActionPerformed
-  
+
+    private void btnExcluirDadosUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirDadosUserActionPerformed
+        //COMO SABER QUAL USUARIO QUE VOU EXCLUIR ? VOU SABER ISSO, POR MEIO DO USUARIO TER SELECIONADO UMA LINHA DA JTABLE
+        //opcao = "CADASTRAR";
+        //obtendo a linha selecionada da JTABLE
+        int linhaSelecionada = this.getTbllBancoDados.getSelectedRow();
+        //verificando se o usuario selecionou uma linha mesmo na tabela, uma validação, -1(e porque não selecionou nada)
+        if (linhaSelecionada < 0)
+            JOptionPane.showMessageDialog(this, "Selecione Um Usuario Para Excluir", "Atenção", JOptionPane.WARNING_MESSAGE);
+        else {
+            //se o usuario selecionou uma linha na tabela, eu vou pegar os dados das colunas que essa linha possui, na tabela
+            //a tabela possui 3 colunas | CODIGO == 0, NOME == 1, LOGIN == 2 | AS COLUNAS ESTÃO INDEXADAS, PARA PODEREM SER ACESSADAS, essas colunas estão  visualmente faceis de ver na View
+            int colunaCodigo = 0, colunaNome = 1, colunaLogin = 2;
+            //para poder selecionar os dados da linha uso o metodo abaixo, que seleciona dados de uma linha, de uma respectiva coluna e linha informados
+            int codigoUser = (int) this.getTbllBancoDados.getValueAt(linhaSelecionada, colunaCodigo);
+            if (this.cp.controlerExcluirUsuario(codigoUser)) {
+                //a linha abaixo limpa os dados da tabela add 0 linhas na tabela
+                this.tblModeloPadrao.setNumRows(0);
+                //apos excluir o usuario, eu mostro a tabela atualizada com os dados de usuarios atualizados
+                this.listaUsuarios();
+                JOptionPane.showMessageDialog(this, "Usuario Excluido Com Sucesso", "Exclusão Ocorrida Com Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocorreu Um Erro ao Excluir Usuario", "Erro na Exclusão", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnExcluirDadosUserActionPerformed
+
+    private void btnLimparDadosTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparDadosTelaActionPerformed
+        //vai limpar os componentes do frame
+        limparFormulario(); //limpa componentes comuns  
+        this.tblModeloPadrao.setNumRows(0); //limpa dados da tabela
+        //opcao = "CADASTRAR";
+    }//GEN-LAST:event_btnLimparDadosTelaActionPerformed
+
+    private void btnAlterarDadosUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarDadosUserActionPerformed
+        //VARIAVEIS ESSENCIAIS
+        int linhaSelecionada, colunaSelecionada = 0, codigoUsuario;
+        //a primeira etapa da alteração de cadastro de um usuario acontece aqui - PARTE 01 - ALTERAÇÃO
+        /*
+       * 1ª FASE DA ALTERAÇÃO DE CADASTRO, UM USUARIO TEM QUE SELECIONAR UM LINHA DA JTABLE(ONDE ESTÃO LISTADOS TODOS USUARIOS)
+         */
+        linhaSelecionada = this.getTbllBancoDados.getSelectedRow();
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "Para poder Alterar Um Cadastro de Um Usuario,\n Selecione Um Usuario Listado Na Tabela!", "Erro ALTERAÇÃO", JOptionPane.WARNING_MESSAGE);
+        } else {
+            //se tiver selecionado uma linha na tabela, vou informa a coluna que quero obter os dados, e vou pegar linha especifica da tabela que preciso para prosseguir com a a alteração no caso, e so o codigo do usuario, linha selecionada e coluna Codigo;
+            //colunas existentes na tabela, são indexadas
+            //CODIGO == 0 | NOME == 1 | LOGIN == 2
+            codigoUsuario = (int) this.getTbllBancoDados.getValueAt(linhaSelecionada, colunaSelecionada);
+            /*
+            * 2º FASE E BUSCAR OS DADOS DESSE USUARIO ESCOLHIDO NO BANCO DE DADOS VER SE ELE EXISTE, E MOSTRAR PARA ELE OS DADOS NA TELA
+             */
+            this.userGlobal = this.cp.controlerBuscaUsuario(codigoUsuario);
+            //usuario existe e possui dados
+            if (userGlobal != null) {
+                //antes de mostrar os dados para o usuario, e bom limpar os componentes
+                limparFormulario();
+                txtCodigoId.setText(userGlobal.getCodigoId().toString());
+                txtNomeUser.setText(userGlobal.getNome());
+                txtLoginUser.setText(userGlobal.getLogin());
+                txtSenhaUser.setText(userGlobal.getSenha());
+                //MARARCANDO A OPÇÃO NO CONTROLE
+                opcao = "ALTERAR";
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocorreu um Erro ao mostrar dados do usario no frame Usuario", "Erro ao mostrar Dados", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnAlterarDadosUserActionPerformed
+
+    /**
+     * Metodo que seta uma fonte externa no frame por completo, nos componentes
+     * e tudo que ele agrupa; Fonte externa usada nesse frame do USUARIO:
+     * PlayfairDisplay-ExtraBold.ttf
+     */
+    private void setFontExterna() {
+        try {
+            //carregando a fonte de destaque
+            fonteExterna = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("fontes_externas/PlayfairDisplay-ExtraBold.ttf"));
+        } catch (IOException | FontFormatException e) {
+            System.out.println("Não carregou as fonte externa padrão da tela do usuario! " + e);
+        }
+        //setando a fonte nos componentes com o estilo e tamanho
+        //setando fonte padrão nas labels
+        lblCodigoId.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        lblNome.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        lblLogin.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        lblSenha.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        //setando fonte padrão nos botões
+        btnSalvarCadUser.setFont(fonteExterna.deriveFont(Font.PLAIN, 20));
+        btnLimparDadosTela.setFont(fonteExterna.deriveFont(Font.PLAIN, 20));
+        btnAlterarDadosUser.setFont(fonteExterna.deriveFont(Font.PLAIN, 20));
+        btnExcluirDadosUser.setFont(fonteExterna.deriveFont(Font.PLAIN, 20));
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(fonteExterna);
+        this.setFont(fonteExterna);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarDadosUser;
