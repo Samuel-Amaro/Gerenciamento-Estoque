@@ -25,7 +25,7 @@ public class ViewUsuario extends javax.swing.JFrame {
     DefaultTableModel tblModeloPadrao;
     Font fonteExterna = null;
     //variavel que vai controlar as opções de um usuario, CADASTRAR,ALTERAR, POR PADRÃO JA COMEÇA COM CADASTRO
-    String opcao = null;
+    String opcao = "CADASTRAR";
 
     public ViewUsuario() {
         initComponents();
