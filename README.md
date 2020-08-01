@@ -12,19 +12,25 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  ## APIs Usadas e Bibliotecas
  * [Ireport Impressão de Relatórios Banco Dados](https://sourceforge.net/projects/ireport/)
  * [Library/Jar SQLITE](https://bitbucket.org/xerial/sqlite-jdbc/downloads/)
- ### Prototipos Interfaces
- * Interface Login
+ ## Padrão de Projeto Aplicado
+ * MVC(MODEL,VIEW,CONTROLLER) em um sistema desktop java;
+ ### Prototipos Interfaces - (GUI)
+ * **INTERFACE ENTRADA SISTEMA**
  
  
- ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-login.PNG)
+ ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-entrada-sistema.PNG)
+ * **INTERFACE LOGIN - PARA AUTENTICAÇÃO NO SISTEMA**
+ 
+ 
+ ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-Login-Correta.PNG)
  * Interface CRUD(Produtos)
  
  
  ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-produtos.PNG)
- * Interface CRUD(Usúarios)
+ * **INTERFACE USUARIOS - ONDE USUARIO SOLICITA(ALTERAÇÃO,CADASTRO,EXCLUSÃO) DADOS - CRUD(USUARIOS)**
  
  
- ![Tela usuarios](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-usuarios.PNG)
+ ![Tela usuarios](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-CRUD-usuarios-Sistema-Certa.PNG)
  * Interface CRUD(Estoque)
  
  
