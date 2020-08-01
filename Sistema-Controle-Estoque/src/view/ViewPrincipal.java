@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 /**
@@ -11,9 +6,6 @@ package view;
  */
 public class ViewPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ViewPrincipal
-     */
     public ViewPrincipal() {
         initComponents();
     }
@@ -53,6 +45,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-produto-btn-principal.png"))); // NOI18N
         jButton2.setText("PRODUTOS");
         jButton2.setPreferredSize(new java.awt.Dimension(64, 64));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icons-movimento-de-estoque-64-btn-principal.png"))); // NOI18N
@@ -141,6 +138,13 @@ public class ViewPrincipal extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(915, 497));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //chama o frame de produtos
+        ViewProduto prod = new ViewProduto();
+        prod.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
