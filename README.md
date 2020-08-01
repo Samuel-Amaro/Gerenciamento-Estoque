@@ -23,11 +23,11 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  
  
  ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-Login-Correta.PNG)
- * Interface CRUD(Produtos)
+ * **INTERFACE PRODUTOS - ONDE USUARIO SOLICITA(INSERÇÃO,ALTERAÇÃO,EXCLUSÃO) DE UM PRODUTO - CRUD(PRODUTOS)**
  
  
- ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-produtos.PNG)
- * **INTERFACE USUARIOS - ONDE USUARIO SOLICITA(ALTERAÇÃO,CADASTRO,EXCLUSÃO) DADOS - CRUD(USUARIOS)**
+ ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-CRUD-produtos-Certa.PNG)
+ * **INTERFACE USUARIOS - ONDE USUARIO SOLICITA(INSERÇÃO,CADASTRO,EXCLUSÃO) DE DADOS DE UM USUARIO - CRUD(USUARIOS)**
  
  
  ![Tela usuarios](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-CRUD-usuarios-Sistema-Certa.PNG)
