@@ -1,20 +1,33 @@
 package view;
 
+import controller.ControlerTblProduto;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import model.ModelProduto;
 
 public class ViewProduto extends javax.swing.JFrame {
 
     //variaveis necessarias
     Font spectral = null;
-
+    ModelProduto produto;
+    ControlerTblProduto controlaProduto;
+    DefaultTableModel tblModeloPadrao;
+    List<ModelProduto> listaProdutos;
+    
     public ViewProduto() {
         initComponents();
         //metodo abaixo seta uma fonte externa padrão no frame
         setFonteExterna();
         setMensagemObs();
+        //mostra produtos ja cadastrados no banco de dados
+        listaProdutosTbl();
     }
 
     @SuppressWarnings("unchecked")
@@ -26,13 +39,13 @@ public class ViewProduto extends javax.swing.JFrame {
         lblDescricaoProduto = new javax.swing.JLabel();
         lblQuantidadeProduto = new javax.swing.JLabel();
         lblValorProduto = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtCodigoIdProduto = new javax.swing.JTextField();
+        txtDescricaoProduto = new javax.swing.JTextField();
+        txtQuantidadeProduto = new javax.swing.JTextField();
+        txtValorProduto = new javax.swing.JTextField();
         btnSalvarProduto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblMostraProdutos = new javax.swing.JTable();
         btnLimpaCampos = new javax.swing.JButton();
         btnAlterarProduto = new javax.swing.JButton();
         btnExcluirProduto = new javax.swing.JButton();
@@ -65,8 +78,13 @@ public class ViewProduto extends javax.swing.JFrame {
         btnSalvarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-salvar-btn-produto.png"))); // NOI18N
         btnSalvarProduto.setText("SALVAR");
         btnSalvarProduto.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnSalvarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarProdutoActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMostraProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -85,17 +103,17 @@ public class ViewProduto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(80);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(80);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(80);
+        jScrollPane1.setViewportView(tblMostraProdutos);
+        if (tblMostraProdutos.getColumnModel().getColumnCount() > 0) {
+            tblMostraProdutos.getColumnModel().getColumn(0).setMinWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(0).setMaxWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(2).setMinWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(2).setMaxWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(3).setMinWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tblMostraProdutos.getColumnModel().getColumn(3).setMaxWidth(80);
         }
 
         btnLimpaCampos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -129,19 +147,19 @@ public class ViewProduto extends javax.swing.JFrame {
                     .addComponent(btnSalvarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField1)
+                            .addComponent(txtCodigoIdProduto)
                             .addComponent(lblCodigoId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                            .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                             .addComponent(lblDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(txtQuantidadeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(lblQuantidadeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4)
+                            .addComponent(txtValorProduto)
                             .addComponent(lblValorProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -164,10 +182,10 @@ public class ViewProduto extends javax.swing.JFrame {
                     .addComponent(lblValorProduto))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQuantidadeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -197,6 +215,65 @@ public class ViewProduto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //ao clicar no botão vai salvar um produto no banco de dados
+    private void btnSalvarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoActionPerformed
+      this.produto = new ModelProduto();
+      this.produto.setDescricaoProduto(this.txtDescricaoProduto.getText()); //descrição produto
+      //trata a conversão de uma string vazia para um valor
+      try {
+            this.produto.setQuantidadeProduto(Integer.parseInt(this.txtQuantidadeProduto.getText())); //quantidade produto
+            this.produto.setValorProduto(Double.parseDouble(this.txtValorProduto.getText())); //valor do produto     
+        } catch (NumberFormatException e) {
+              //se a string for vazia passo um valor 0 para as quantidades
+              this.produto.setQuantidadeProduto(0); //quantidade produto
+              this.produto.setValorProduto(0);//valor do produto
+        }
+      this.controlaProduto = new ControlerTblProduto();
+      if(this.controlaProduto.controlerCadastraProduto(produto)) {
+          JOptionPane.showMessageDialog(this,"Produto Cadastrado Com Sucesso","Sucesso Cadastro",JOptionPane.INFORMATION_MESSAGE);
+          listaProdutosTbl();
+          limpaCamposView();
+      }else{
+          JOptionPane.showMessageDialog(this,"Produto Não Cadastrado\n Preencha os Campos Corretamente!","Erro no Cadastro",JOptionPane.ERROR_MESSAGE);
+          limpaCamposView();
+      }
+    }//GEN-LAST:event_btnSalvarProdutoActionPerformed
+
+    /**
+     * Metodo que vai listar produtos cadastrados no banco de dados,na tabela da view Produto, vai listar os produtos do banco de dados na tabela,
+     * da interface da View Produto;
+     */
+    private void listaProdutosTbl() {
+      //POR SER UMA TABELA QUE VAI MOSTRAR SO TEXTO, NÃO PRECISA SER UMA TABELA DE MODELO MUITO PERSONALIZADO, UMA TABELA PADRÃO JA BASTA  
+      this.tblModeloPadrao = (DefaultTableModel) this.tblMostraProdutos.getModel();
+      //inicializa a tabela com 0 linhas
+      this.tblModeloPadrao.setNumRows(0);
+      this.produto = new ModelProduto();
+      this.listaProdutos = new ArrayList<>();
+      this.controlaProduto = new ControlerTblProduto();
+      this.listaProdutos = this.controlaProduto.controlerGetListaProdutos();
+      //vai percorre a lista de objetos, acessando objeto por objeto, e adiconaodo cada dado de um obejto nas colunas, prenchendo uma linha completa com
+      //dados de objeto
+      for(int indice = 0; indice < this.listaProdutos.size(); indice += 1) {
+          //lembrando que as colunas da tabela que esta na view são indexadas
+          this.tblModeloPadrao.addRow(new Object[] {
+            this.listaProdutos.get(indice).getIdProduto(), //seta id produto na coluna id da tabela | coluna == 0
+            this.listaProdutos.get(indice).getDescricaoProduto(), //seta descrição produto na coluna descrição | coluna == 1
+            this.listaProdutos.get(indice).getQuantidadeProduto(), //seta quantidade do produto na coluna quantidade | coluna == 2
+            this.listaProdutos.get(indice).getValorProduto() //seta valor do produto na coluna produto da tabela | coluna == 3
+            });
+            //coloca o simbolo de R$ na coluna onde fica o valor do produto e concatena com o valor do produto, usando a indexação de colunas, e setando
+            //umas linhas na tabela em uma so coluna a de valor do produto
+            this.tblModeloPadrao.setValueAt("R$ " + this.listaProdutos.get(indice).getValorProduto(),indice,3);
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
     /**
      * Metodo que vai setar uma fonte externa no frame de produtos; Fonte padrão
      * do frame = Spectral-Bold.ttf;
@@ -236,6 +313,15 @@ public class ViewProduto extends javax.swing.JFrame {
                                 + "</p>"
                                 + "</body></html>");
     }
+    /**
+     * Metodo que limpa campos do formulario, apos uma ação que deixou os campos com varios dados; 
+     */
+    private void limpaCamposView() {
+     this.txtCodigoIdProduto.setText(null);
+     this.txtDescricaoProduto.setText(null);
+     this.txtQuantidadeProduto.setText(null);
+     this.txtValorProduto.setText(null);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarProduto;
@@ -244,15 +330,15 @@ public class ViewProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvarProduto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblCodigoId;
     private javax.swing.JLabel lblDescricaoProduto;
     private javax.swing.JLabel lblMensagemObs;
     private javax.swing.JLabel lblQuantidadeProduto;
     private javax.swing.JLabel lblValorProduto;
+    private javax.swing.JTable tblMostraProdutos;
+    private javax.swing.JTextField txtCodigoIdProduto;
+    private javax.swing.JTextField txtDescricaoProduto;
+    private javax.swing.JTextField txtQuantidadeProduto;
+    private javax.swing.JTextField txtValorProduto;
     // End of variables declaration//GEN-END:variables
 }
