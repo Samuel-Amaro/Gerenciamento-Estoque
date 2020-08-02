@@ -23,6 +23,10 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  
  
  ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-Login-Correta.PNG)
+ * **UTILIZAÇÃO DA INTERFACE DE LOGIN MOSTRANDO COMO SE AUTENTICAR**
+
+
+ ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/gif-readme-entrada-login-certo.gif)
  * **INTERFACE PRODUTOS - ONDE USUARIO SOLICITA(INSERÇÃO,ALTERAÇÃO,EXCLUSÃO) DE UM PRODUTO - CRUD(PRODUTOS)**
  
  
