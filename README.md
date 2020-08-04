@@ -27,6 +27,10 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
 
 
  ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/gif-readme-entrada-login-certo.gif)
+ * **UTILIZAÇÃO DA INTERFACE DE USUARIO, PREVIEW DE COMO UM USUARIO CADASTRA UM NOVO USUARIO, E COMO ALTERA O DADOS RELACIONADO A ESSE NOVO USUARIO**
+ 
+ 
+ ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/preview-crud-usuario-certo.gif)
  * **INTERFACE PRODUTOS - ONDE USUARIO SOLICITA(INSERÇÃO,ALTERAÇÃO,EXCLUSÃO) DE UM PRODUTO - CRUD(PRODUTOS)**
  
  
