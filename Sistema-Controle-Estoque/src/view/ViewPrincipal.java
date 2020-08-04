@@ -40,6 +40,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jButton1.setText("USÚARIOS");
         jButton1.setToolTipText("");
         jButton1.setPreferredSize(new java.awt.Dimension(64, 64));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-produto-btn-principal.png"))); // NOI18N
@@ -145,6 +150,12 @@ public class ViewPrincipal extends javax.swing.JFrame {
         prod.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ViewUsuario user = new ViewUsuario();
+        user.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
