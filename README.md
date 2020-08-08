@@ -15,14 +15,10 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  ## Padrão de Projeto Aplicado
  * MVC(MODEL,VIEW,CONTROLLER) em um sistema desktop java;
  ### Prototipos Interfaces - (GUI)
- * **INTERFACE ENTRADA SISTEMA**
+ * **PREVIEW - DE COMO USUARIO SE AUTENTICA NO SISTEMA, COMO MANIPULAR USUARIOS NO SISTEMA, CADASTRANDO, ALTERANDO, EXCLUINDO!**
  
  
- ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-entrada-sistema.PNG)
- * **INTERFACE LOGIN - PARA AUTENTICAÇÃO NO SISTEMA**
- 
- 
- ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/interface-Login-Correta.PNG)
+ ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/preview-entrada-logim-crud-user-certo-18.gif)
  * **UTILIZAÇÃO DA INTERFACE DE LOGIN MOSTRANDO COMO SE AUTENTICAR**
 
 
