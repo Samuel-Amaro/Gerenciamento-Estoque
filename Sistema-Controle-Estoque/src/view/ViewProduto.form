@@ -166,6 +166,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCodigoIdProduto">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDescricaoProduto">
         </Component>
@@ -182,7 +185,7 @@
               <Color blue="2d" green="95" red="b3" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagensicones/icone-salvar-btn-produto.png"/>
+              <Image iconType="3" name="/imagens_icones/icone-salvar-btn-produto.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="SALVAR"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -250,7 +253,7 @@
               <Color blue="2d" green="95" red="b3" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagensicones/icone-limpeza-btn-produto.png"/>
+              <Image iconType="3" name="/imagens_icones/icone-limpeza-btn-produto.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="LIMPAR"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -267,13 +270,16 @@
               <Color blue="2d" green="95" red="b3" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagensicones/icone-alterar-produ-btn.png"/>
+              <Image iconType="3" name="/imagens_icones/icone-alterar-produ-btn.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ALTERAR"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[48, 48]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarProdutoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnExcluirProduto">
           <Properties>
@@ -284,7 +290,7 @@
               <Color blue="2d" green="95" red="b3" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagensicones/icone-deletar-product-btn-produto.png"/>
+              <Image iconType="3" name="/imagens_icones/icone-deletar-product-btn-produto.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

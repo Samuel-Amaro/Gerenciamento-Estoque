@@ -162,7 +162,7 @@ public class ViewUsuario extends javax.swing.JFrame {
 
         btnSalvarCadUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSalvarCadUser.setForeground(new java.awt.Color(102, 82, 11));
-        btnSalvarCadUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/disquete-salvar-usuario-btn.png"))); // NOI18N
+        btnSalvarCadUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/disquete-salvar-usuario-btn.png"))); // NOI18N
         btnSalvarCadUser.setText("SALVAR");
         btnSalvarCadUser.setPreferredSize(new java.awt.Dimension(48, 48));
         btnSalvarCadUser.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +199,7 @@ public class ViewUsuario extends javax.swing.JFrame {
 
         btnLimparDadosTela.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnLimparDadosTela.setForeground(new java.awt.Color(102, 82, 11));
-        btnLimparDadosTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-limpar-btn-user.png"))); // NOI18N
+        btnLimparDadosTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-limpar-btn-user.png"))); // NOI18N
         btnLimparDadosTela.setText("LIMPAR");
         btnLimparDadosTela.setPreferredSize(new java.awt.Dimension(48, 48));
         btnLimparDadosTela.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +210,7 @@ public class ViewUsuario extends javax.swing.JFrame {
 
         btnAlterarDadosUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnAlterarDadosUser.setForeground(new java.awt.Color(102, 82, 11));
-        btnAlterarDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-editar-user-btn-user.png"))); // NOI18N
+        btnAlterarDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-editar-user-btn-user.png"))); // NOI18N
         btnAlterarDadosUser.setText("ALTERAR");
         btnAlterarDadosUser.setPreferredSize(new java.awt.Dimension(48, 48));
         btnAlterarDadosUser.addActionListener(new java.awt.event.ActionListener() {
@@ -221,7 +221,7 @@ public class ViewUsuario extends javax.swing.JFrame {
 
         btnExcluirDadosUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnExcluirDadosUser.setForeground(new java.awt.Color(102, 82, 11));
-        btnExcluirDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-excluir-user-btn-user.png"))); // NOI18N
+        btnExcluirDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-excluir-user-btn-user.png"))); // NOI18N
         btnExcluirDadosUser.setText("EXCLUIR");
         btnExcluirDadosUser.setPreferredSize(new java.awt.Dimension(48, 48));
         btnExcluirDadosUser.addActionListener(new java.awt.event.ActionListener() {
@@ -280,9 +280,9 @@ public class ViewUsuario extends javax.swing.JFrame {
                     .addComponent(txtSenhaUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSalvarCadUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimparDadosTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterarDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

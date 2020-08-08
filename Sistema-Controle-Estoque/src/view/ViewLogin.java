@@ -61,7 +61,7 @@ public class ViewLogin extends javax.swing.JFrame {
         lblSenha.setText("SENHA");
 
         btnEntrarSistema.setForeground(new java.awt.Color(179, 149, 45));
-        btnEntrarSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icone-entrar-btn-login.png"))); // NOI18N
+        btnEntrarSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/entrar-certo.png"))); // NOI18N
         btnEntrarSistema.setText("ENTRAR!");
         btnEntrarSistema.setToolTipText("Entrar No Sistema");
         btnEntrarSistema.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -72,7 +72,7 @@ public class ViewLogin extends javax.swing.JFrame {
         });
 
         btnSairSistema.setForeground(new java.awt.Color(179, 149, 45));
-        btnSairSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensicones/icone-btn-login-sair.png"))); // NOI18N
+        btnSairSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/sair-certo.png"))); // NOI18N
         btnSairSistema.setText("VOLTAR!");
         btnSairSistema.setToolTipText("Sair Do Sistema");
         btnSairSistema.setMinimumSize(new java.awt.Dimension(48, 48));

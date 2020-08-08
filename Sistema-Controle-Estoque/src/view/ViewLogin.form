@@ -146,7 +146,7 @@
               <Color blue="2d" green="95" red="b3" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/view/icone-entrar-btn-login.png"/>
+              <Image iconType="3" name="/imagens_icones/entrar-certo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ENTRAR!"/>
             <Property name="toolTipText" type="java.lang.String" value="Entrar No Sistema"/>
@@ -164,7 +164,7 @@
               <Color blue="2d" green="95" red="b3" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagensicones/icone-btn-login-sair.png"/>
+              <Image iconType="3" name="/imagens_icones/sair-certo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="VOLTAR!"/>
             <Property name="toolTipText" type="java.lang.String" value="Sair Do Sistema"/>

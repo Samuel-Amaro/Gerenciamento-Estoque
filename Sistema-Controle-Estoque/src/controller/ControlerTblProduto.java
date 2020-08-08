@@ -42,7 +42,7 @@ public class ControlerTblProduto {
    
    /**
     * Metodo que controla o acesso aos produtos cadastrados na tabela TBL_PRODUTO do banco de dados;
-    * @return produto(se existir)
+    * @return ListModelProduto(se existir)
     */
    public List<ModelProduto> controlerGetListaProdutos() {
        try {
@@ -56,4 +56,36 @@ public class ControlerTblProduto {
                return null;
        }
    }
+   /**
+    * Metodo que controla a entrada e saida ao metodo daoGetProduto;
+    * Metodo que busca um produto no banco de dados, atraves de seu id, correspodente na tbl_produto;
+    * @param codigoProduto
+    * @return ModelProduto se existir
+    */
+   public ModelProduto controlerGetProduto(int codigoProduto) {
+       try {
+           this.daoProduto = new DaoTblProduto();
+           this.produto = new ModelProduto();
+           this.produto = this.daoProduto.daoGetProduto(codigoProduto);
+           return this.produto;
+       } catch (SQLException e) {
+               System.out.println("OCORREU UM ERRO AO BUSCAR PRODUTO ATRAVES DE SEU CODIGO ID\n METODO: daoGetProduto\n erro: " + e);
+               return null;
+       }
+   }
+    
+    /**
+     * Metdo que faz o controle de atualização de um produto na tbl_produto
+     * @param produto
+     * @return true se atualizou false se não
+     */
+    public boolean controlerAtualizaProduto(ModelProduto produto) {
+        try {
+            this.daoProduto = new DaoTblProduto();
+            return this.daoProduto.daoAtualizaProduto(produto);
+        } catch (SQLException e) {
+                System.out.println("OCORREU UM ERRO AO atualizar PRODUTO\n METODO: daoAtualizarProduto\n erro: " + e);
+               return false;
+        }
+    }
 }
