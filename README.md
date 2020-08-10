@@ -14,6 +14,13 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  * [Library/Jar SQLITE](https://bitbucket.org/xerial/sqlite-jdbc/downloads/)
  ## Padrão de Projeto Aplicado
  * MVC(MODEL,VIEW,CONTROLLER) em um sistema desktop java;
+   * O princípio básico do MVC é a divisão da aplicação em três camadas: a camada de interação do usuário (view), a camada de manipulação dos dados (model) e a camada de            controle (controller);
+   * MODEL
+     1. A responsabilidade dos models é representar o negócio. Também é responsável pelo acesso e manipulação dos dados na sua aplicação.
+   * CONTROLER
+     1. É a camada de controle, responsável por ligar o model e a view, fazendo com que os models possam ser repassados para as views e vice-versa. 
+   * VIEW
+     1. A view é responsável pela interface que será apresentada, mostrando as informações do model para o usuário.
  ### Prototipos Interfaces - (GUI)
  * **PREVIEW - DE COMO USUARIO SE AUTENTICA NO SISTEMA, E MOSTRANDO A INTERFACE PRINCIPAL!**
  
