@@ -1,13 +1,28 @@
 package view;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.util.Calendar;
+import model.ModelUsuario;
+
 /**
  *
  * @author SAMUE
  */
 public class ViewPrincipal extends javax.swing.JFrame {
 
-    public ViewPrincipal() {
+    //variaveis essencias
+    ModelUsuario user;
+    Font fonteExterna;
+    
+    public ViewPrincipal(ModelUsuario usuarioLogado) {
+        this.user = usuarioLogado;
         initComponents();
+        this.lblUsuario.setText(this.user.getLogin());
+        this.dataHoraSessao();
+        this.setFontExterna();
     }
 
     /**
@@ -27,6 +42,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        lblSessao = new javax.swing.JLabel();
+        lblDataHora = new javax.swing.JLabel();
+        lblUsuarioLogado = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PRINCIPAL");
@@ -60,6 +80,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         btnMovimentaEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icons-movimento-de-estoque-64-btn-principal.png"))); // NOI18N
         btnMovimentaEstoque.setText("ESTOQUE");
         btnMovimentaEstoque.setPreferredSize(new java.awt.Dimension(64, 64));
+        btnMovimentaEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMovimentaEstoqueActionPerformed(evt);
+            }
+        });
 
         btnSobreSistema.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSobreSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-informacao-sistema-btn-principal.png"))); // NOI18N
@@ -107,21 +132,63 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(171, 171, 147));
         jLabel1.setText("GERENCIAMENTO DE ESTOQUE");
 
+        jPanel3.setBackground(new java.awt.Color(66, 79, 199));
+
+        lblSessao.setForeground(new java.awt.Color(255, 255, 255));
+        lblSessao.setText("INFORMATION SYSTEM");
+
+        lblUsuarioLogado.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuarioLogado.setText("USUARIO LOGADO");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblDataHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSessao, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(lblUsuarioLogado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(9, 13, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lblSessao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGap(117, 117, 117))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,11 +203,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(915, 497));
+        setSize(new java.awt.Dimension(915, 510));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -157,41 +223,51 @@ public class ViewPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnUserActionPerformed
 
+    private void btnMovimentaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimentaEstoqueActionPerformed
+       //chama a tela de gerencimento de estoque
+       ViewEstoque ve = new ViewEstoque(this.user);
+       ve.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_btnMovimentaEstoqueActionPerformed
+     
     /**
-     * @param args the command line arguments
+     * metodo que obtem a data e hora do sistema para poder mostrar o usuario logado em uma seção atual
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewPrincipal().setVisible(true);
-            }
-        });
+    private void dataHoraSessao() {
+        Calendar data = Calendar.getInstance();
+        //pegando a data atual
+        int dia = data.get(Calendar.DAY_OF_MONTH);
+        int mes = data.get(Calendar.MONTH) + 1; //add mais um porque se inicia em 0 o mes
+        int ano = data.get(Calendar.YEAR);
+        //hora
+        int hora = data.get(Calendar.HOUR_OF_DAY);
+        int minute = data.get(Calendar.MINUTE);
+        this.lblDataHora.setText("<html><body><p align=center>" + dia + "/" + mes + "/" + ano + "</p>"
+                + "<p align=center>" + hora + ":" + minute + "</p></body></html>");
     }
-
+    
+    /**
+     * Metodo que seta uma fonte externa no frame por completo, nos componentes
+     * e tudo que ele agrupa; Fonte externa usada nesse frame de movimentação de estoque:
+     * PlayfairDisplay-ExtraBold.ttf
+     */
+    private void setFontExterna() {
+        try {
+            //carregando a fonte de destaque
+            fonteExterna = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("fontes_externas/Gayathri-Regular.ttf"));
+        } catch (IOException | FontFormatException e) {
+            System.out.println("Não carregou as fonte externa padrão da tela principal! " + e);
+        }
+        //setando a fonte nos componentes com o estilo e tamanho
+        //setando fonte padrão nas labels
+        lblDataHora.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        lblUsuario.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        lblSessao.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        lblUsuarioLogado.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(fonteExterna);
+        this.setFont(fonteExterna);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMovimentaEstoque;
     private javax.swing.JButton btnProduto;
@@ -201,5 +277,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblDataHora;
+    private javax.swing.JLabel lblSessao;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JLabel lblUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }
