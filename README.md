@@ -22,23 +22,27 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
    * VIEW
      1. A view é responsável pela interface que será apresentada, mostrando as informações do model para o usuário.
  ### Prototipos Interfaces - (GUI)
- * **PREVIEW - DE COMO USUARIO SE AUTENTICA NO SISTEMA, E MOSTRANDO A INTERFACE PRINCIPAL!**
+ * **PREVIEW - Da interface de entrada onde usuario escolhe a sua ação no sistema!**
  
  
- ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/preview-entrada-login-principal.gif)
- * **PREVIEW DA INTERFACE DE PRODUTOS - MOSTRANDO COMO SE CADASTRAR UM PRODUTO, ALTERAR UM PRODUTO, EXCLUIR UM PRODUTO!**
+ ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-entrada.png)
+ * **PREVIEW DA INTERFACE DE LOGIM!**
 
 
- ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/preview-crud-produtos.gif)
- * **UTILIZAÇÃO DA INTERFACE DE USUARIO, PREVIEW DE COMO UM USUARIO CADASTRA UM NOVO USUARIO, E COMO ALTERA O DADOS RELACIONADO A ESSE NOVO USUARIO**
+ ![Tela Login](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-login.png)
+ * **PREVIEW DA INTERFACE PRINCIPAL DO SISTEMA**
  
  
- ![Tela Entrada](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/preview-crud-usuario-certo.gif)
- * Interface CRUD(Estoque)
+ ![Tela Principal](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-principal.png)
+ * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DE USUARIOS DO SISTEMA**
  
  
- ![Tela Estoque](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-estoque.PNG)
- * Interface Principal
+ ![Tela Usuario](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-usuario.png)
+ * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DE PRODUTOS CADASTRO, ALTERAÇÃO, EXCLUSÃO**
  
  
- ![Tela Principal](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipo-interface-principal.PNG)
+ ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-produtos.png)
+ * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DO ESTOQUE, ONDE REGISTRA AS MOVIMENTAÇÕES DE ENTRADA E SAIDA DO ESTOQUE**
+ 
+ 
+  ![Tela Estoque](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-estoque.png)
