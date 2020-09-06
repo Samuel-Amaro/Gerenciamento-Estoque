@@ -14,9 +14,17 @@ public class ModelEstoque {
   private int quantidade;
   private double preco;
   private int tipo_movimentacao;
-  private Date data_movimentacao;
   private int fk_usuario;
   private int fk_produto;
+  private Date dataMovimentacao;
+
+    public Date getDataMovimentacao() {
+        return dataMovimentacao;
+    }
+
+    public void setDataMovimentacao(Date dataMovimentacao) {
+        this.dataMovimentacao = dataMovimentacao;
+    }
   
 //metodos acessores de atributos
     public int getId_pk() {
@@ -51,14 +59,6 @@ public class ModelEstoque {
         this.tipo_movimentacao = tipo_movimentacao;
     }
 
-    public Date getData_movimentacao() {
-        return data_movimentacao;
-    }
-
-    public void setData_movimentacao(Date data_movimentacao) {
-        this.data_movimentacao = data_movimentacao;
-    }
-
     public int getFk_usuario() {
         return fk_usuario;
     }
@@ -74,6 +74,5 @@ public class ModelEstoque {
     public void setFk_produto(int fk_produto) {
         this.fk_produto = fk_produto;
     }
-  
-  
+
 }

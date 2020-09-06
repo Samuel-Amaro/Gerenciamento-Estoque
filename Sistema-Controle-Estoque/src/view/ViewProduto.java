@@ -40,11 +40,9 @@ public class ViewProduto extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblCodigoId = new javax.swing.JLabel();
         lblDescricaoProduto = new javax.swing.JLabel();
-        lblQuantidadeProduto = new javax.swing.JLabel();
         lblValorProduto = new javax.swing.JLabel();
         txtCodigoIdProduto = new javax.swing.JTextField();
         txtDescricaoProduto = new javax.swing.JTextField();
-        txtQuantidadeProduto = new javax.swing.JTextField();
         txtValorProduto = new javax.swing.JTextField();
         btnSalvarProduto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -68,10 +66,6 @@ public class ViewProduto extends javax.swing.JFrame {
         lblDescricaoProduto.setForeground(new java.awt.Color(179, 149, 45));
         lblDescricaoProduto.setText("DESCRIÇÃO PRODUTO *");
 
-        lblQuantidadeProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblQuantidadeProduto.setForeground(new java.awt.Color(179, 149, 45));
-        lblQuantidadeProduto.setText("QUANTIDADE");
-
         lblValorProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblValorProduto.setForeground(new java.awt.Color(179, 149, 45));
         lblValorProduto.setText("VALOR *");
@@ -81,7 +75,7 @@ public class ViewProduto extends javax.swing.JFrame {
         btnSalvarProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnSalvarProduto.setForeground(new java.awt.Color(179, 149, 45));
         btnSalvarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-salvar-btn-produto.png"))); // NOI18N
-        btnSalvarProduto.setText("SALVAR");
+        btnSalvarProduto.setText("SALVAR PRODUTO");
         btnSalvarProduto.setPreferredSize(new java.awt.Dimension(48, 48));
         btnSalvarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,17 +85,17 @@ public class ViewProduto extends javax.swing.JFrame {
 
         tblMostraProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "CÓDIGO", "DESCRIÇÃO PRODUTO", "QUANTIDADE", "VALOR"
+                "CÓDIGO", "DESCRIÇÃO PRODUTO", "VALOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -116,9 +110,6 @@ public class ViewProduto extends javax.swing.JFrame {
             tblMostraProdutos.getColumnModel().getColumn(2).setMinWidth(80);
             tblMostraProdutos.getColumnModel().getColumn(2).setPreferredWidth(80);
             tblMostraProdutos.getColumnModel().getColumn(2).setMaxWidth(80);
-            tblMostraProdutos.getColumnModel().getColumn(3).setMinWidth(80);
-            tblMostraProdutos.getColumnModel().getColumn(3).setPreferredWidth(80);
-            tblMostraProdutos.getColumnModel().getColumn(3).setMaxWidth(80);
         }
 
         btnLimpaCampos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -143,6 +134,11 @@ public class ViewProduto extends javax.swing.JFrame {
         btnExcluirProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-deletar-product-btn-produto.png"))); // NOI18N
         btnExcluirProduto.setText("EXCLUIR");
         btnExcluirProduto.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnExcluirProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirProdutoActionPerformed(evt);
+            }
+        });
 
         lblMensagemObs.setForeground(new java.awt.Color(179, 149, 45));
         lblMensagemObs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -161,12 +157,8 @@ public class ViewProduto extends javax.swing.JFrame {
                             .addComponent(lblCodigoId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                            .addComponent(lblDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtQuantidadeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(lblQuantidadeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtDescricaoProduto)
+                            .addComponent(lblDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtValorProduto)
@@ -188,13 +180,11 @@ public class ViewProduto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigoId)
                     .addComponent(lblDescricaoProduto)
-                    .addComponent(lblQuantidadeProduto)
                     .addComponent(lblValorProduto))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQuantidadeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,12 +231,10 @@ public class ViewProduto extends javax.swing.JFrame {
                     this.produto.setDescricaoProduto(this.txtDescricaoProduto.getText()); //descrição produto
                     //trata a conversão de uma string vazia para um valor
                     try {
-                        this.produto.setQuantidadeProduto(Integer.parseInt(this.txtQuantidadeProduto.getText())); //quantidade produto
                         FormatadorDados f = new FormatadorDados();
                         this.produto.setValorProduto(f.formataValor(this.txtValorProduto.getText())); //valor do produto     
                     } catch (NumberFormatException e) {
                         //se a string for vazia passo um valor 0 para as quantidades
-                        this.produto.setQuantidadeProduto(0); //quantidade produto
                         this.produto.setValorProduto(0);//valor do produto
                         System.out.println("O campor valor do produto não pode ficar vazio!: " + e);
                     }
@@ -273,12 +261,10 @@ public class ViewProduto extends javax.swing.JFrame {
                     this.produto.setDescricaoProduto(this.txtDescricaoProduto.getText()); //descrição produto
                     try {
                         this.produto.setIdProduto(Integer.parseInt(this.txtCodigoIdProduto.getText()));
-                        this.produto.setQuantidadeProduto(Integer.parseInt(this.txtQuantidadeProduto.getText())); //quantidade produto
                         FormatadorDados f = new FormatadorDados();
                         this.produto.setValorProduto(f.formataValor(this.txtValorProduto.getText())); //valor do produto     
                     } catch (NumberFormatException e) {
                         //se a string for vazia passo um valor 0 para as quantidades
-                        this.produto.setQuantidadeProduto(0); //quantidade produto
                         this.produto.setValorProduto(0);//valor do produto
                         System.out.println("O campor valor do produto não pode ficar vazio!: " + e);
                     }
@@ -323,18 +309,19 @@ public class ViewProduto extends javax.swing.JFrame {
             if (this.produto != null) {
                 this.txtCodigoIdProduto.setText(String.valueOf(this.produto.getIdProduto()));
                 this.txtDescricaoProduto.setText(this.produto.getDescricaoProduto());
-                this.txtQuantidadeProduto.setText(String.valueOf(this.produto.getQuantidadeProduto()));
                 this.txtValorProduto.setText(String.valueOf(this.produto.getValorProduto()));
                 this.controlaOpcaoUsuario = "ALTERAR";
             } else {
                 //produto não existe na tbl_produto
                 this.txtCodigoIdProduto.setText("Sem Codigo");
                 this.txtDescricaoProduto.setText("Não Possui Descrição");
-                this.txtQuantidadeProduto.setText("Não Possui Quantidade");
                 this.txtValorProduto.setText("Não Possui Valor");
             }
         }
     }//GEN-LAST:event_btnAlterarProdutoActionPerformed
+
+    private void btnExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProdutoActionPerformed
+    }//GEN-LAST:event_btnExcluirProdutoActionPerformed
 
     /**
      * Metodo que vai listar produtos cadastrados no banco de dados,na tabela da
@@ -357,12 +344,11 @@ public class ViewProduto extends javax.swing.JFrame {
             this.tblModeloPadrao.addRow(new Object[]{
                 this.listaProdutos.get(indice).getIdProduto(), //seta id produto na coluna id da tabela | coluna == 0
                 this.listaProdutos.get(indice).getDescricaoProduto(), //seta descrição produto na coluna descrição | coluna == 1
-                this.listaProdutos.get(indice).getQuantidadeProduto(), //seta quantidade do produto na coluna quantidade | coluna == 2
-                this.listaProdutos.get(indice).getValorProduto() //seta valor do produto na coluna produto da tabela | coluna == 3
+                this.listaProdutos.get(indice).getValorProduto() //seta valor do produto na coluna produto da tabela | coluna == 2
             });
             //coloca o simbolo de R$ na coluna onde fica o valor do produto e concatena com o valor do produto, usando a indexação de colunas, e setando
             //umas linhas na tabela em uma so coluna a de valor do produto
-            this.tblModeloPadrao.setValueAt("R$ " + this.listaProdutos.get(indice).getValorProduto(), indice, 3);
+            this.tblModeloPadrao.setValueAt("R$ " + this.listaProdutos.get(indice).getValorProduto(), indice, 2);
         }
     }
 
@@ -381,7 +367,6 @@ public class ViewProduto extends javax.swing.JFrame {
         //setando a fonte nos labels dos campos - estilo(constante e simples) tamanho(18)
         this.lblCodigoId.setFont(spectral.deriveFont(Font.PLAIN, 18)); //codigoId
         this.lblDescricaoProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //descriçãoProduto
-        this.lblQuantidadeProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //quantidadeProduto
         this.lblValorProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //valorProduto
         this.lblMensagemObs.setFont(spectral.deriveFont(Font.PLAIN, 18)); //mensagemObs
         //setando a fonte nos botoes - estilo(constante e simples) tamanho(18)
@@ -415,7 +400,6 @@ public class ViewProduto extends javax.swing.JFrame {
     private void limpaCamposView() {
         this.txtCodigoIdProduto.setText(null);
         this.txtDescricaoProduto.setText(null);
-        this.txtQuantidadeProduto.setText(null);
         this.txtValorProduto.setText(null);
     }
 
@@ -429,12 +413,10 @@ public class ViewProduto extends javax.swing.JFrame {
     private javax.swing.JLabel lblCodigoId;
     private javax.swing.JLabel lblDescricaoProduto;
     private javax.swing.JLabel lblMensagemObs;
-    private javax.swing.JLabel lblQuantidadeProduto;
     private javax.swing.JLabel lblValorProduto;
     private javax.swing.JTable tblMostraProdutos;
     private javax.swing.JTextField txtCodigoIdProduto;
     private javax.swing.JTextField txtDescricaoProduto;
-    private javax.swing.JTextField txtQuantidadeProduto;
     private javax.swing.JTextField txtValorProduto;
     // End of variables declaration//GEN-END:variables
 }

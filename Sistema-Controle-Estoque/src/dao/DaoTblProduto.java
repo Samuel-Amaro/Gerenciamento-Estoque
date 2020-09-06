@@ -36,14 +36,12 @@ public class DaoTblProduto extends ConexaoSqLite {
     public boolean daoCadastraProduto(ModelProduto novoProduto) throws SQLException {
         String insertSql = "INSERT INTO tbl_produto"
                 + "(descricao,"
-                + "quantidade,"
                 + "valor) "
-                + "VALUES(?,?,?);";
+                + "VALUES(?,?);";
         this.conexaoBanco = conectaBanco();
         this.preparaSql = this.conexaoBanco.prepareStatement(insertSql);
         this.preparaSql.setString(1, novoProduto.getDescricaoProduto());
-        this.preparaSql.setInt(2, novoProduto.getQuantidadeProduto());
-        this.preparaSql.setDouble(3, novoProduto.getValorProduto());
+        this.preparaSql.setDouble(2, novoProduto.getValorProduto());
         int adicionou = this.preparaSql.executeUpdate();
         //inseriu uma linha na tabela tbl_produto
         if (adicionou > 0) {
@@ -67,7 +65,6 @@ public class DaoTblProduto extends ConexaoSqLite {
         String selectSql = "SELECT "
                 + "pk_codigo_produto,"
                 + "descricao,"
-                + "quantidade,"
                 + "valor "
                 + "FROM tbl_produto;";
         this.conexaoBanco = conectaBanco();
@@ -78,8 +75,7 @@ public class DaoTblProduto extends ConexaoSqLite {
             this.produto = new ModelProduto();
             this.produto.setIdProduto(this.resultadoSql.getInt(1)); //CODIGO ID
             this.produto.setDescricaoProduto(this.resultadoSql.getString(2)); //DESCRIÇÃO DO PRODUTO
-            this.produto.setQuantidadeProduto(this.resultadoSql.getInt(3)); //QUANTIDADE PRODUTO
-            this.produto.setValorProduto(this.resultadoSql.getDouble(4)); //VALOR DO PRODUTO
+            this.produto.setValorProduto(this.resultadoSql.getDouble(3)); //VALOR DO PRODUTO
             this.produtos.add(produto);
         }
         this.preparaSql.close();
@@ -97,7 +93,6 @@ public class DaoTblProduto extends ConexaoSqLite {
         String selectSql = "SELECT "
                 + "pk_codigo_produto,"
                 + "descricao,"
-                + "quantidade,"
                 + "valor "
                 + "FROM tbl_produto WHERE pk_codigo_produto = " + codigoProduto + ";";
         this.conexaoBanco = conectaBanco();
@@ -107,8 +102,7 @@ public class DaoTblProduto extends ConexaoSqLite {
             this.produto = new ModelProduto();
             this.produto.setIdProduto(this.resultadoSql.getInt(1)); //CODIGO ID
             this.produto.setDescricaoProduto(this.resultadoSql.getString(2)); //DESCRIÇÃO DO PRODUTO
-            this.produto.setQuantidadeProduto(this.resultadoSql.getInt(3)); //QUANTIDADE PRODUTO
-            this.produto.setValorProduto(this.resultadoSql.getDouble(4)); //VALOR DO PRODUTO
+            this.produto.setValorProduto(this.resultadoSql.getDouble(3)); //VALOR DO PRODUTO
             this.preparaSql.close();
             this.resultadoSql.close();
             return this.produto;
@@ -127,17 +121,15 @@ public class DaoTblProduto extends ConexaoSqLite {
     public boolean daoAtualizaProduto(ModelProduto produto) throws SQLException {
        String updateSql = "UPDATE tbl_produto "
                +          "SET descricao = ?,"
-               +          "quantidade = ?,"
                +          "valor = ? "
                +          "WHERE pk_codigo_produto = ?;";
        this.conexaoBanco = conectaBanco();
        this.preparaSql = this.conexaoBanco.prepareStatement(updateSql);
        //campos que vão ser atualizados na tbl_produto
        this.preparaSql.setString(1,produto.getDescricaoProduto());
-       this.preparaSql.setInt(2,produto.getQuantidadeProduto());
-       this.preparaSql.setDouble(3,produto.getValorProduto());
+       this.preparaSql.setDouble(2,produto.getValorProduto());
        //produto que vai ser atualizado
-       this.preparaSql.setInt(4,produto.getIdProduto());
+       this.preparaSql.setInt(3,produto.getIdProduto());
        int executou = this.preparaSql.executeUpdate();
        //modificou uma linha no banco de dados
        if(executou > 0) {

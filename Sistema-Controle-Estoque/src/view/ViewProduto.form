@@ -58,13 +58,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtDescricaoProduto" pref="400" max="32767" attributes="0"/>
-                              <Component id="lblDescricaoProduto" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtQuantidadeProduto" pref="120" max="32767" attributes="0"/>
-                              <Component id="lblQuantidadeProduto" max="32767" attributes="0"/>
+                              <Component id="txtDescricaoProduto" max="32767" attributes="0"/>
+                              <Component id="lblDescricaoProduto" pref="538" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -93,14 +88,12 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblCodigoId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblDescricaoProduto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblQuantidadeProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblValorProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtCodigoIdProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtDescricaoProduto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtQuantidadeProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtValorProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -143,17 +136,6 @@
             <Property name="text" type="java.lang.String" value="DESCRI&#xc7;&#xc3;O PRODUTO *"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblQuantidadeProduto">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="2d" green="95" red="b3" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="QUANTIDADE"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblValorProduto">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -172,8 +154,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDescricaoProduto">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtQuantidadeProduto">
-        </Component>
         <Component class="javax.swing.JTextField" name="txtValorProduto">
         </Component>
         <Component class="javax.swing.JButton" name="btnSalvarProduto">
@@ -187,7 +167,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagens_icones/icone-salvar-btn-produto.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="SALVAR"/>
+            <Property name="text" type="java.lang.String" value="SALVAR PRODUTO"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[48, 48]"/>
             </Property>
@@ -206,10 +186,9 @@
             <Component class="javax.swing.JTable" name="tblMostraProdutos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
+                  <Table columnCount="3" rowCount="4">
                     <Column editable="false" title="C&#xd3;DIGO" type="java.lang.Object"/>
                     <Column editable="false" title="DESCRI&#xc7;&#xc3;O PRODUTO" type="java.lang.Object"/>
-                    <Column editable="false" title="QUANTIDADE" type="java.lang.Object"/>
                     <Column editable="false" title="VALOR" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -221,11 +200,6 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="80" minWidth="80" prefWidth="80" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -297,6 +271,9 @@
               <Dimension value="[48, 48]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirProdutoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMensagemObs">
           <Properties>

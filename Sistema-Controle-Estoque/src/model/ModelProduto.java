@@ -12,7 +12,6 @@ public class ModelProduto {
 //atributos de um produto(Caracteristicas) - de acordo com a tabela do banco de dados;
     private int idProduto;
     private String descricaoProduto;
-    private int quantidadeProduto;
     private double valorProduto;
 
 //metodos acessores de atributos
@@ -31,15 +30,6 @@ public class ModelProduto {
     public void setDescricaoProduto(String descricaoProduto) {
         this.descricaoProduto = descricaoProduto;
     }
-
-    public int getQuantidadeProduto() {
-        return quantidadeProduto;
-    }
-
-    public void setQuantidadeProduto(int quantidadeProduto) {
-        this.quantidadeProduto = quantidadeProduto;
-    }
-
     public double getValorProduto() {
         return valorProduto;
     }

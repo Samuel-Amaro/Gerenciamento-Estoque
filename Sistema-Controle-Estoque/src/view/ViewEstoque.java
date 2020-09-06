@@ -5,39 +5,48 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.ModelEstoque;
 import model.ModelProduto;
 import model.ModelUsuario;
 
-
 public class ViewEstoque extends javax.swing.JFrame {
 
-    
     //variaveis essenciais
     private Font fonteExterna;
     private ControlerTblEstoque controlEstoque;
     private ModelEstoque estoque;
     private List<ModelProduto> produtos;
-    
+    private DefaultTableModel modeloTabelaMovimentacao;
+    private List<ModelEstoque> listaEstoque;
+
     //variaveis essenciais
     ModelUsuario usuarioLogado;
+
     public ViewEstoque(ModelUsuario user) {
         //informações do usuario logado no sistema
         this.usuarioLogado = user;
-        
+
         initComponents();
         //aplicando uma fonte externa no frame de gerencimaneto de estoque
         setFontExterna();
         //mostra a descricao dos produtos cadastrados para o usuario
         this.listDescricaoProdutos();
+        //metodo que mostra as movimentações atualizadas de estoque que o usuario loagado faz
+        this.carregaMovimentacoesEstoque();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,7 +65,7 @@ public class ViewEstoque extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         lblFilterPesquisa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaMostraMovimentacao = new javax.swing.JTable();
         btnSalvarMovim = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         gerarRelatorioMov = new javax.swing.JButton();
@@ -71,7 +80,7 @@ public class ViewEstoque extends javax.swing.JFrame {
         lblTipoMov.setForeground(new java.awt.Color(250, 247, 70));
         lblTipoMov.setText("TIPO MOVIMENTAÇÃO");
 
-        cbTipoMov.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECIONE", "ENTRADA", "SAIDÁ" }));
+        cbTipoMov.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENTRADA", "SAIDÁ" }));
         cbTipoMov.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoMovActionPerformed(evt);
@@ -80,7 +89,7 @@ public class ViewEstoque extends javax.swing.JFrame {
 
         lblDescricaoProd.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblDescricaoProd.setForeground(new java.awt.Color(250, 247, 70));
-        lblDescricaoProd.setText("DESCRIÇÃO PRODUTO");
+        lblDescricaoProd.setText("ESCOLHA PRODUTO ABAIXO PELA DESCRIÇÃO");
 
         cbDescriProd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha a Descrição Do Produto" }));
 
@@ -104,18 +113,34 @@ public class ViewEstoque extends javax.swing.JFrame {
         lblFilterPesquisa.setForeground(new java.awt.Color(250, 247, 70));
         lblFilterPesquisa.setText("ESCOLHA UM FILTRO ABAIXO");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaMostraMovimentacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Preço", "Produto", "Quantidade", "Movimentação", "Data Movimentação", "Usuário Movimentou"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabelaMostraMovimentacao);
+        if (tabelaMostraMovimentacao.getColumnModel().getColumnCount() > 0) {
+            tabelaMostraMovimentacao.getColumnModel().getColumn(0).setPreferredWidth(15);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(2).setPreferredWidth(15);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(3).setPreferredWidth(15);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(4).setPreferredWidth(15);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(5).setPreferredWidth(15);
+        }
 
         btnSalvarMovim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-salva-estoque-botao.png"))); // NOI18N
         btnSalvarMovim.setText("Salvar Movimentação");
@@ -238,44 +263,50 @@ public class ViewEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_cbTipoMovActionPerformed
 
     private void btnSalvarMovimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarMovimActionPerformed
-      this.estoque = new ModelEstoque();
-      this.estoque.setQuantidade((int)this.spQtd.getModel().getValue());
-      this.estoque.setPreco(Double.parseDouble(this.txtPreco.getText()));
-      this.estoque.setTipo_movimentacao(this.cbTipoMov.getSelectedIndex()); //indice comboBox - indice mov | 0 = selecione | 1 = entrada | 2 = saida
-      //obtendo id do produto que vai fazer parte da mov
-      String descr = String.valueOf(this.cbDescriProd.getSelectedItem());
-        for(int i = 0; i < this.produtos.size(); i++) {
-            if(this.produtos.get(i).getDescricaoProduto().equals(descr)) {
-               int indiceProduto = this.produtos.get(i).getIdProduto();
-               this.estoque.setFk_produto(indiceProduto);
+        this.estoque = new ModelEstoque();
+        this.estoque.setQuantidade((int) this.spQtd.getModel().getValue());
+        this.estoque.setPreco(Double.parseDouble(this.txtPreco.getText()));
+        this.estoque.setTipo_movimentacao(this.cbTipoMov.getSelectedIndex()); //indice comboBox - indice mov | 0 = entrada | 1 = saida
+        //obtendo id do produto que vai fazer parte da mov
+        String descr = String.valueOf(this.cbDescriProd.getSelectedItem());
+        for (int i = 0; i < this.produtos.size(); i++) {
+            if (this.produtos.get(i).getDescricaoProduto().equals(descr)) {
+                int indiceProduto = this.produtos.get(i).getIdProduto();
+                this.estoque.setFk_produto(indiceProduto);
             }
         }
-      //obtendo id do usuario logado que esta fazendo a mov
-      this.estoque.setFk_usuario(this.usuarioLogado.getCodigoId());
-      //data da movimentação
-      Calendar data = Calendar.getInstance();
-      Date d = data.getTime();//data.get(Calendar.MONTH);
-      this.estoque.setData_movimentacao(d);
+        //obtendo id do usuario logado que esta fazendo a mov
+        this.estoque.setFk_usuario(this.usuarioLogado.getCodigoId());
+        this.controlEstoque = new ControlerTblEstoque();
+
+        //mandando uma mensagem de confirmação para ver se a movimentação deu certo
+        if (this.controlEstoque.controlerAddMovEstoque(estoque)) {
+            JOptionPane.showMessageDialog(this, "Movimentação de Entrada Operada Com Sucesso!");
+            //lopo apos que a movimentação tiver sido efetuada atualizado a tabela de movimmentações na interface para o usuario visualizar
+            this.carregaMovimentacoesEstoque();
+        } else {
+            JOptionPane.showMessageDialog(this, "Falha na Movimentação de Entrada no Estoque!");
+        }
     }//GEN-LAST:event_btnSalvarMovimActionPerformed
 
     /**
-     * metodo que popula um jcomb box com a descrição de todos os produtos cadastrados no sistema;
+     * metodo que popula um jcomb box com a descrição de todos os produtos
+     * cadastrados no sistema;
      */
     private void listDescricaoProdutos() {
-      produtos = new ArrayList<>();
-      this.controlEstoque = new ControlerTblEstoque();
-      produtos = this.controlEstoque.controlerGetDescricaoProdutos();
+        produtos = new ArrayList<>();
+        this.controlEstoque = new ControlerTblEstoque();
+        produtos = this.controlEstoque.controlerGetDescricaoProdutos();
         for (int i = 0; i < produtos.size(); i++) {
             Object object = produtos.get(i).getDescricaoProduto();
             this.cbDescriProd.addItem(object.toString());
         }
     }
-    
-    
+
     /**
      * Metodo que seta uma fonte externa no frame por completo, nos componentes
-     * e tudo que ele agrupa; Fonte externa usada nesse frame de movimentação de estoque:
-     * PlayfairDisplay-ExtraBold.ttf
+     * e tudo que ele agrupa; Fonte externa usada nesse frame de movimentação de
+     * estoque: PlayfairDisplay-ExtraBold.ttf
      */
     private void setFontExterna() {
         try {
@@ -290,16 +321,61 @@ public class ViewEstoque extends javax.swing.JFrame {
         lblValorProd.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
         lblQtdProd.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
         lblPesqEstoque.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
-        lblFilterPesquisa.setFont(fonteExterna.deriveFont(Font.PLAIN,15));
+        lblFilterPesquisa.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
         lblDescricaoProd.setFont(fonteExterna.deriveFont(Font.PLAIN, 15));
         //setando fonte padrão nos botoes
-        btnSalvarMovim.setFont(fonteExterna.deriveFont(Font.PLAIN,20));
-        gerarRelatorioMov.setFont(fonteExterna.deriveFont(Font.PLAIN,20));
+        btnSalvarMovim.setFont(fonteExterna.deriveFont(Font.PLAIN, 20));
+        gerarRelatorioMov.setFont(fonteExterna.deriveFont(Font.PLAIN, 20));
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(fonteExterna);
         this.setFont(fonteExterna);
     }
 
+    /**
+     * Metdo que vai carrega automaticamente as movimentações de estoque do
+     * usuario logado no sistema; e mostra toda essas movimentações para o
+     * usuario;
+     */
+    private void carregaMovimentacoesEstoque() {
+        //adiconando um modelo de tabela a que esta aparacendo na viewEstoque
+        this.modeloTabelaMovimentacao = (DefaultTableModel) this.tabelaMostraMovimentacao.getModel();
+        //a tabela se inicializa com 0 linhas
+        this.modeloTabelaMovimentacao.setNumRows(0);
+        this.listaEstoque = new ArrayList<ModelEstoque>();
+        this.controlEstoque = new ControlerTblEstoque();
+        this.estoque = new ModelEstoque();
+        this.listaEstoque = this.controlEstoque.controlerGetEstoques(usuarioLogado);
+        String entr = "entrada";
+        String said = "saida";
+        for (int i = 0; i < listaEstoque.size(); i++) {
+            //de acordo com o tipo de movimentação eu mudo um dado na tabela na coluna movimentação para mostra uma string ao invez de um inteiro
+            int mov = this.listaEstoque.get(i).getTipo_movimentacao(); //obtendo a movimentação
+            //movimentação de entrada
+            if (mov == 0) {
+                //add linha na tabela que mostra as movimentalçoes de estoque que o usuario fez assi mostra todas moviemntações automaticas e atualiadas
+                this.modeloTabelaMovimentacao.addRow(new Object[]{
+                    this.listaEstoque.get(i).getPreco(), //coluna 0
+                    this.listaEstoque.get(i).getFk_produto(), //coluna 1
+                    this.listaEstoque.get(i).getQuantidade(), //coluna 2
+                    entr, //coluna 3
+                    this.listaEstoque.get(i).getDataMovimentacao(), //coluna 4
+                    this.listaEstoque.get(i).getFk_usuario() //coluna 5
+                });
+            } else {
+                //add um linha na tabela com dados de movimentação de estoque que ele mesmo movimentou, add no formato de um obejto json
+                //moviemntação de saida
+                this.modeloTabelaMovimentacao.addRow(new Object[]{
+                    this.listaEstoque.get(i).getPreco(),
+                    this.listaEstoque.get(i).getFk_produto(),
+                    this.listaEstoque.get(i).getQuantidade(),
+                    said,
+                    this.listaEstoque.get(i).getDataMovimentacao(),
+                    this.listaEstoque.get(i).getFk_usuario()
+                });
+            }
+
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvarMovim;
     private javax.swing.JComboBox<String> cbDescriProd;
@@ -309,7 +385,6 @@ public class ViewEstoque extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblDescricaoProd;
     private javax.swing.JLabel lblFilterPesquisa;
@@ -318,6 +393,7 @@ public class ViewEstoque extends javax.swing.JFrame {
     private javax.swing.JLabel lblTipoMov;
     private javax.swing.JLabel lblValorProd;
     private javax.swing.JSpinner spQtd;
+    private javax.swing.JTable tabelaMostraMovimentacao;
     private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 }
