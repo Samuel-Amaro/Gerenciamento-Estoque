@@ -103,35 +103,67 @@ public class DaoTblEstoque extends ConexaoSqLite {
      * @throws java.sql.SQLException
      */
     public List<ModelEstoque> daoGetEstoques(ModelUsuario usuarioLogado) throws SQLException {
-       String dmlSelect = "SELECT pk_codigo_estoque,"
-               + "quantidade_estoque,"
-               + "preco_estoque,"
-               + "tipo_movimentacao_estoque,"
-               + "data_estoque,"
-               + "fk_usuario,"
-               + "fk_produto "
-               + "FROM tbl_estoque "
-               + "WHERE pk_codigo_estoque = ?;";
-       this.conexaoBanco = conectaBanco();
-       this.preparaSql = this.conexaoBanco.prepareStatement(dmlSelect);
-       //aplicando um filtro para trazer movimentações de estoque so do usuario logado no sistema
-       this.preparaSql.setInt(1,usuarioLogado.getCodigoId());
-       //executa consulta
-       this.resultadoSql = this.preparaSql.executeQuery();
-       //enquanto tiver linhas do banco de dados com dados vai iterar sobre o resultSet
-       this.listaEstoque = new ArrayList<ModelEstoque>();
-       while(this.resultadoSql.next()) {
+        String dmlSelect = "SELECT pk_codigo_estoque,"
+                + "quantidade_estoque,"
+                + "preco_estoque,"
+                + "tipo_movimentacao_estoque,"
+                + "data_estoque,"
+                + "fk_usuario,"
+                + "fk_produto "
+                + "FROM tbl_estoque "
+                + "WHERE fk_usuario = ?;";
+        this.conexaoBanco = conectaBanco();
+        this.preparaSql = this.conexaoBanco.prepareStatement(dmlSelect);
+        //aplicando um filtro para trazer movimentações de estoque so do usuario logado no sistema
+        this.preparaSql.setInt(1, usuarioLogado.getCodigoId());
+        //executa consulta
+        this.resultadoSql = this.preparaSql.executeQuery();
+        //enquanto tiver linhas do banco de dados com dados vai iterar sobre o resultSet
+        this.listaEstoque = new ArrayList<>();
+        while (resultadoSql.next()) {
             this.estoque = new ModelEstoque();
             this.estoque.setId_pk(this.resultadoSql.getInt(1));
             this.estoque.setQuantidade(this.resultadoSql.getInt(2));
             this.estoque.setPreco(this.resultadoSql.getDouble(3));
-            this.estoque.setDataMovimentacao(this.resultadoSql.getDate(4));
-            this.estoque.setFk_usuario(this.resultadoSql.getInt(5));
-            this.estoque.setFk_produto(this.resultadoSql.getInt(6));
+            this.estoque.setTipo_movimentacao(this.resultadoSql.getInt(4));
+            this.estoque.setDataMovimentacao(this.resultadoSql.getString(5));
+            this.estoque.setFk_usuario(this.resultadoSql.getInt(6));
+            this.estoque.setFk_produto(this.resultadoSql.getInt(7));
             this.listaEstoque.add(estoque);
-       }
-       this.preparaSql.close();
-       this.resultadoSql.close();
-       return this.listaEstoque;
+        }
+        this.preparaSql.close();
+        this.resultadoSql.close();
+        return this.listaEstoque;
+    }
+
+    /**
+     * Metodo que vai buscar na tabela estoque, a quantidade de entrada e saida
+     * de um respectivo produto; tras a soma total da quantidade que um produto
+     * entrou ou saiu do estoque
+     *
+     * @param tipoMovimentacao
+     * @param idProduto
+     * @return int quantidade movimentacao
+     * @throws java.sql.SQLException quem chama trata a exceção
+     */
+    public Integer daoContaMovimentacao(int tipoMovimentacao, int idProduto) throws SQLException {
+        String dqlSelect = "SELECT SUM(quantidade_estoque) AS qtd_Movimentacao \n"
+                + "  FROM tbl_estoque\n"
+                + "  WHERE fk_produto = " + idProduto + " AND tipo_movimentacao_estoque = " + tipoMovimentacao + ";";
+
+        this.conexaoBanco = conectaBanco();
+        this.preparaSql = this.conexaoBanco.prepareStatement(dqlSelect);
+        this.resultadoSql = this.preparaSql.executeQuery();
+        if (this.resultadoSql.next()) {
+            this.preparaSql.close();
+            int qtd = this.resultadoSql.getInt(1);
+            this.resultadoSql.close();
+            this.preparaSql.close();
+            return qtd;
+        } else {
+            this.resultadoSql.close();
+            this.preparaSql.close();
+            return -1;
+        }
     }
 }

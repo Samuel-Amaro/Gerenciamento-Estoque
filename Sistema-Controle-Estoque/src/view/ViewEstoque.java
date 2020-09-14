@@ -5,16 +5,8 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.ModelEstoque;
@@ -30,9 +22,7 @@ public class ViewEstoque extends javax.swing.JFrame {
     private List<ModelProduto> produtos;
     private DefaultTableModel modeloTabelaMovimentacao;
     private List<ModelEstoque> listaEstoque;
-
-    //variaveis essenciais
-    ModelUsuario usuarioLogado;
+    private ModelUsuario usuarioLogado;
 
     public ViewEstoque(ModelUsuario user) {
         //informações do usuario logado no sistema
@@ -41,10 +31,11 @@ public class ViewEstoque extends javax.swing.JFrame {
         initComponents();
         //aplicando uma fonte externa no frame de gerencimaneto de estoque
         setFontExterna();
-        //mostra a descricao dos produtos cadastrados para o usuario
-        this.listDescricaoProdutos();
         //metodo que mostra as movimentações atualizadas de estoque que o usuario loagado faz
         this.carregaMovimentacoesEstoque();
+        //mostra a descricao dos produtos cadastrados para o usuario
+        this.listDescricaoProdutos();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -121,7 +112,7 @@ public class ViewEstoque extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Preço", "Produto", "Quantidade", "Movimentação", "Data Movimentação", "Usuário Movimentou"
+                "Preço", "Produto", "Quantidade", "Movimentação", "Data", "User"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -134,12 +125,12 @@ public class ViewEstoque extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaMostraMovimentacao);
         if (tabelaMostraMovimentacao.getColumnModel().getColumnCount() > 0) {
-            tabelaMostraMovimentacao.getColumnModel().getColumn(0).setPreferredWidth(15);
-            tabelaMostraMovimentacao.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tabelaMostraMovimentacao.getColumnModel().getColumn(2).setPreferredWidth(15);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(2).setPreferredWidth(5);
             tabelaMostraMovimentacao.getColumnModel().getColumn(3).setPreferredWidth(15);
             tabelaMostraMovimentacao.getColumnModel().getColumn(4).setPreferredWidth(15);
-            tabelaMostraMovimentacao.getColumnModel().getColumn(5).setPreferredWidth(15);
+            tabelaMostraMovimentacao.getColumnModel().getColumn(5).setPreferredWidth(5);
         }
 
         btnSalvarMovim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-salva-estoque-botao.png"))); // NOI18N
@@ -233,10 +224,10 @@ public class ViewEstoque extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addGap(11, 11, 11)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(gerarRelatorioMov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(44, 44, 44))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,43 +254,48 @@ public class ViewEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_cbTipoMovActionPerformed
 
     private void btnSalvarMovimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarMovimActionPerformed
+        this.controlEstoque = new ControlerTblEstoque();
         this.estoque = new ModelEstoque();
         this.estoque.setQuantidade((int) this.spQtd.getModel().getValue());
-        this.estoque.setPreco(Double.parseDouble(this.txtPreco.getText()));
-        this.estoque.setTipo_movimentacao(this.cbTipoMov.getSelectedIndex()); //indice comboBox - indice mov | 0 = entrada | 1 = saida
-        //obtendo id do produto que vai fazer parte da mov
+        //o preço quando usuario digita e um string texto tem que converte para o tipo double
+        try {
+            this.estoque.setPreco(Double.parseDouble(this.txtPreco.getText()));  //indice comboBox - indice mov | 0 = entrada | 1 = saida
+        } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,"PREENCHA O CAMPO PREÇO CORRETAMENTE","PRENCHER CAMPOS OBRIGATORIOS",JOptionPane.WARNING_MESSAGE);
+        }
+        //obtendo o tipo de movimentação de um jcBox
+        this.estoque.setTipo_movimentacao(this.cbTipoMov.getSelectedIndex());
+        //obtendo descrição do produto selecionado no jcBox
         String descr = String.valueOf(this.cbDescriProd.getSelectedItem());
-        for (int i = 0; i < this.produtos.size(); i++) {
-            if (this.produtos.get(i).getDescricaoProduto().equals(descr)) {
-                int indiceProduto = this.produtos.get(i).getIdProduto();
-                this.estoque.setFk_produto(indiceProduto);
+        //obtendo id do usuario logado 
+        this.estoque.setFk_usuario(this.usuarioLogado.getCodigoId());
+        int idProduto = -1;
+        //obtendo id do produto atraves da decrição(onde usuario escolheu). percorrendo o array list onde esta armazenado todos objetos produtos;
+        for (int i = 0; i < produtos.size(); i++) {
+            ModelProduto produto = produtos.get(i);
+            if(produto.getDescricaoProduto().equals(descr)) {
+               idProduto = produto.getIdProduto();
             }
         }
-        //obtendo id do usuario logado que esta fazendo a mov
-        this.estoque.setFk_usuario(this.usuarioLogado.getCodigoId());
-        this.controlEstoque = new ControlerTblEstoque();
-
-        //mandando uma mensagem de confirmação para ver se a movimentação deu certo
+        this.estoque.setFk_produto(idProduto);
         if (this.controlEstoque.controlerAddMovEstoque(estoque)) {
-            JOptionPane.showMessageDialog(this, "Movimentação de Entrada Operada Com Sucesso!");
-            //lopo apos que a movimentação tiver sido efetuada atualizado a tabela de movimmentações na interface para o usuario visualizar
-            this.carregaMovimentacoesEstoque();
+            JOptionPane.showMessageDialog(this, "MOVIMENTAÇÃO NO ESTOQUE EFETUADA COM SUCESSO", "MOVIMENTAÇÃO ESTOQUE", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Falha na Movimentação de Entrada no Estoque!");
+            JOptionPane.showMessageDialog(this,"PREENCHA OS CAMPOS CORRETAMENTE","MOVIMENTAÇÃO ESTOQUE",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarMovimActionPerformed
 
-    /**
-     * metodo que popula um jcomb box com a descrição de todos os produtos
-     * cadastrados no sistema;
-     */
-    private void listDescricaoProdutos() {
+/**
+ * metodo que popula um jcomb box com a descrição de todos os produtos
+ * cadastrados no sistema;
+ */
+private void listDescricaoProdutos() {
         produtos = new ArrayList<>();
         this.controlEstoque = new ControlerTblEstoque();
         produtos = this.controlEstoque.controlerGetDescricaoProdutos();
         for (int i = 0; i < produtos.size(); i++) {
-            Object object = produtos.get(i).getDescricaoProduto();
-            this.cbDescriProd.addItem(object.toString());
+            Object objetoDescricao = produtos.get(i).getDescricaoProduto();
+            this.cbDescriProd.addItem(objetoDescricao.toString());
         }
     }
 
@@ -341,12 +337,13 @@ public class ViewEstoque extends javax.swing.JFrame {
         this.modeloTabelaMovimentacao = (DefaultTableModel) this.tabelaMostraMovimentacao.getModel();
         //a tabela se inicializa com 0 linhas
         this.modeloTabelaMovimentacao.setNumRows(0);
-        this.listaEstoque = new ArrayList<ModelEstoque>();
+        this.listaEstoque = new ArrayList<>();
         this.controlEstoque = new ControlerTblEstoque();
         this.estoque = new ModelEstoque();
         this.listaEstoque = this.controlEstoque.controlerGetEstoques(usuarioLogado);
         String entr = "entrada";
         String said = "saida";
+        //populando a tabela com da view estoque com os itens do array list que e cada movimentação do estoque
         for (int i = 0; i < listaEstoque.size(); i++) {
             //de acordo com o tipo de movimentação eu mudo um dado na tabela na coluna movimentação para mostra uma string ao invez de um inteiro
             int mov = this.listaEstoque.get(i).getTipo_movimentacao(); //obtendo a movimentação
@@ -362,17 +359,17 @@ public class ViewEstoque extends javax.swing.JFrame {
                     this.listaEstoque.get(i).getFk_usuario() //coluna 5
                 });
             } else {
-                //add um linha na tabela com dados de movimentação de estoque que ele mesmo movimentou, add no formato de um obejto json
-                //moviemntação de saida
-                this.modeloTabelaMovimentacao.addRow(new Object[]{
-                    this.listaEstoque.get(i).getPreco(),
-                    this.listaEstoque.get(i).getFk_produto(),
-                    this.listaEstoque.get(i).getQuantidade(),
-                    said,
-                    this.listaEstoque.get(i).getDataMovimentacao(),
-                    this.listaEstoque.get(i).getFk_usuario()
-                });
-            }
+                      //add um linha na tabela com dados de movimentação de estoque que ele mesmo movimentou, add no formato de um obejto json
+                      //moviemntação de saida
+                      this.modeloTabelaMovimentacao.addRow(new Object[]{
+                           this.listaEstoque.get(i).getPreco(),
+                           this.listaEstoque.get(i).getFk_produto(),
+                           this.listaEstoque.get(i).getQuantidade(),
+                           said,
+                           this.listaEstoque.get(i).getDataMovimentacao(),
+                           this.listaEstoque.get(i).getFk_usuario()
+                      });
+                }
 
         }
     }

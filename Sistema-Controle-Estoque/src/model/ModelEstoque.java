@@ -16,13 +16,13 @@ public class ModelEstoque {
   private int tipo_movimentacao;
   private int fk_usuario;
   private int fk_produto;
-  private Date dataMovimentacao;
+  private String dataMovimentacao;
 
-    public Date getDataMovimentacao() {
+    public String getDataMovimentacao() {
         return dataMovimentacao;
     }
 
-    public void setDataMovimentacao(Date dataMovimentacao) {
+    public void setDataMovimentacao(String dataMovimentacao) {
         this.dataMovimentacao = dataMovimentacao;
     }
   
