@@ -212,14 +212,14 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
     private void btnProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutoActionPerformed
         //chama o frame de produtos
-        ViewProduto prod = new ViewProduto();
+        ViewProduto prod = new ViewProduto(this.user);
         prod.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnProdutoActionPerformed
 
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
-        ViewUsuario user = new ViewUsuario();
-        user.setVisible(true);
+        ViewUsuario interfaceUsuario = new ViewUsuario(this.user);
+        interfaceUsuario.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnUserActionPerformed
 

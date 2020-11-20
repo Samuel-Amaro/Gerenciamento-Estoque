@@ -280,6 +280,8 @@ public class ViewEstoque extends javax.swing.JFrame {
         this.estoque.setFk_produto(idProduto);
         if (this.controlEstoque.controlerAddMovEstoque(estoque)) {
             JOptionPane.showMessageDialog(this, "MOVIMENTAÇÃO NO ESTOQUE EFETUADA COM SUCESSO", "MOVIMENTAÇÃO ESTOQUE", JOptionPane.INFORMATION_MESSAGE);
+            //mostra estoque atualizado com a operação finalizada
+            this.carregaMovimentacoesEstoque();
         } else {
             JOptionPane.showMessageDialog(this,"PREENCHA OS CAMPOS CORRETAMENTE","MOVIMENTAÇÃO ESTOQUE",JOptionPane.ERROR_MESSAGE);
         }
@@ -348,29 +350,16 @@ private void listDescricaoProdutos() {
             //de acordo com o tipo de movimentação eu mudo um dado na tabela na coluna movimentação para mostra uma string ao invez de um inteiro
             int mov = this.listaEstoque.get(i).getTipo_movimentacao(); //obtendo a movimentação
             //movimentação de entrada
-            if (mov == 0) {
+           // if (mov == 0) {
                 //add linha na tabela que mostra as movimentalçoes de estoque que o usuario fez assi mostra todas moviemntações automaticas e atualiadas
                 this.modeloTabelaMovimentacao.addRow(new Object[]{
                     this.listaEstoque.get(i).getPreco(), //coluna 0
                     this.listaEstoque.get(i).getFk_produto(), //coluna 1
                     this.listaEstoque.get(i).getQuantidade(), //coluna 2
-                    entr, //coluna 3
+                    (this.listaEstoque.get(i).getTipo_movimentacao() == 0) ? "ENTRADA" : "SAIDA", //0 == entrada | 1 == saida
                     this.listaEstoque.get(i).getDataMovimentacao(), //coluna 4
                     this.listaEstoque.get(i).getFk_usuario() //coluna 5
                 });
-            } else {
-                      //add um linha na tabela com dados de movimentação de estoque que ele mesmo movimentou, add no formato de um obejto json
-                      //moviemntação de saida
-                      this.modeloTabelaMovimentacao.addRow(new Object[]{
-                           this.listaEstoque.get(i).getPreco(),
-                           this.listaEstoque.get(i).getFk_produto(),
-                           this.listaEstoque.get(i).getQuantidade(),
-                           said,
-                           this.listaEstoque.get(i).getDataMovimentacao(),
-                           this.listaEstoque.get(i).getFk_usuario()
-                      });
-                }
-
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

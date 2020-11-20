@@ -11,23 +11,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.ModelProduto;
+import model.ModelUsuario;
 import utiuls.FormatadorDados;
 
 public class ViewProduto extends javax.swing.JFrame {
 
     //variaveis necessarias
-    Font spectral = null;
-    ModelProduto produto;
-    ControlerTblProduto controlaProduto;
-    DefaultTableModel tblModeloPadrao;
-    List<ModelProduto> listaProdutos;
-    String controlaOpcaoUsuario = "";
+    private Font spectral = null;
+    private ModelProduto produto;
+    private ControlerTblProduto controlaProduto;
+    private DefaultTableModel tblModeloPadrao;
+    private List<ModelProduto> listaProdutos;
+    private String controlaOpcaoUsuario = "";
+    private ModelUsuario userLogado = new ModelUsuario(); 
 
-    public ViewProduto() {
+    public ViewProduto(ModelUsuario user) {
+        //usuario logado no sistema
+        this.userLogado = user;
+        //inicia componentes graficos no frame
         initComponents();
         //metodo abaixo seta uma fonte externa padrão no frame
         setFonteExterna();
-        setMensagemObs();
+       // setMensagemObs();
         //mostra produtos ja cadastrados no banco de dados
         listaProdutosTbl();
         this.controlaOpcaoUsuario = "CADASTRAR";
@@ -37,51 +42,38 @@ public class ViewProduto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        conteinerAgrupaElementosFrame = new javax.swing.JPanel();
         lblCodigoId = new javax.swing.JLabel();
         lblDescricaoProduto = new javax.swing.JLabel();
         lblValorProduto = new javax.swing.JLabel();
         txtCodigoIdProduto = new javax.swing.JTextField();
         txtDescricaoProduto = new javax.swing.JTextField();
         txtValorProduto = new javax.swing.JTextField();
-        btnSalvarProduto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMostraProdutos = new javax.swing.JTable();
+        conteinerAgrupaButtons = new javax.swing.JPanel();
+        btnSalvarProduto = new javax.swing.JButton();
         btnLimpaCampos = new javax.swing.JButton();
         btnAlterarProduto = new javax.swing.JButton();
         btnExcluirProduto = new javax.swing.JButton();
-        lblMensagemObs = new javax.swing.JLabel();
+        btnVoltarView = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manipulação de Produtos");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 10, 102));
+        conteinerAgrupaElementosFrame.setBackground(new java.awt.Color(183, 183, 183));
 
         lblCodigoId.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblCodigoId.setForeground(new java.awt.Color(179, 149, 45));
         lblCodigoId.setText("CÓDIGO");
 
         lblDescricaoProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblDescricaoProduto.setForeground(new java.awt.Color(179, 149, 45));
         lblDescricaoProduto.setText("DESCRIÇÃO PRODUTO *");
 
         lblValorProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblValorProduto.setForeground(new java.awt.Color(179, 149, 45));
         lblValorProduto.setText("VALOR *");
 
         txtCodigoIdProduto.setEditable(false);
-
-        btnSalvarProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnSalvarProduto.setForeground(new java.awt.Color(179, 149, 45));
-        btnSalvarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-salvar-btn-produto.png"))); // NOI18N
-        btnSalvarProduto.setText("SALVAR PRODUTO");
-        btnSalvarProduto.setPreferredSize(new java.awt.Dimension(48, 48));
-        btnSalvarProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarProdutoActionPerformed(evt);
-            }
-        });
 
         tblMostraProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,14 +104,24 @@ public class ViewProduto extends javax.swing.JFrame {
             tblMostraProdutos.getColumnModel().getColumn(2).setMaxWidth(80);
         }
 
+        conteinerAgrupaButtons.setBackground(new java.awt.Color(102, 102, 102));
+
+        btnSalvarProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnSalvarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-salvar-btn-produto.png"))); // NOI18N
+        btnSalvarProduto.setText("SALVAR PRODUTO");
+        btnSalvarProduto.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnSalvarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarProdutoActionPerformed(evt);
+            }
+        });
+
         btnLimpaCampos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnLimpaCampos.setForeground(new java.awt.Color(179, 149, 45));
         btnLimpaCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-limpeza-btn-produto.png"))); // NOI18N
         btnLimpaCampos.setText("LIMPAR");
         btnLimpaCampos.setPreferredSize(new java.awt.Dimension(48, 48));
 
         btnAlterarProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnAlterarProduto.setForeground(new java.awt.Color(179, 149, 45));
         btnAlterarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-alterar-produ-btn.png"))); // NOI18N
         btnAlterarProduto.setText("ALTERAR");
         btnAlterarProduto.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -130,7 +132,6 @@ public class ViewProduto extends javax.swing.JFrame {
         });
 
         btnExcluirProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnExcluirProduto.setForeground(new java.awt.Color(179, 149, 45));
         btnExcluirProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-deletar-product-btn-produto.png"))); // NOI18N
         btnExcluirProduto.setText("EXCLUIR");
         btnExcluirProduto.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -140,78 +141,100 @@ public class ViewProduto extends javax.swing.JFrame {
             }
         });
 
-        lblMensagemObs.setForeground(new java.awt.Color(179, 149, 45));
-        lblMensagemObs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalvarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCodigoIdProduto)
-                            .addComponent(lblCodigoId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDescricaoProduto)
-                            .addComponent(lblDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtValorProduto)
-                            .addComponent(lblValorProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnLimpaCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
-                        .addComponent(btnAlterarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblMensagemObs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        javax.swing.GroupLayout conteinerAgrupaButtonsLayout = new javax.swing.GroupLayout(conteinerAgrupaButtons);
+        conteinerAgrupaButtons.setLayout(conteinerAgrupaButtonsLayout);
+        conteinerAgrupaButtonsLayout.setHorizontalGroup(
+            conteinerAgrupaButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteinerAgrupaButtonsLayout.createSequentialGroup()
+                .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpaCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAlterarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        conteinerAgrupaButtonsLayout.setVerticalGroup(
+            conteinerAgrupaButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnLimpaCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(conteinerAgrupaButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnAlterarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        btnVoltarView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-voltar-view.png"))); // NOI18N
+        btnVoltarView.setPreferredSize(new java.awt.Dimension(32, 32));
+        btnVoltarView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarViewActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout conteinerAgrupaElementosFrameLayout = new javax.swing.GroupLayout(conteinerAgrupaElementosFrame);
+        conteinerAgrupaElementosFrame.setLayout(conteinerAgrupaElementosFrameLayout);
+        conteinerAgrupaElementosFrameLayout.setHorizontalGroup(
+            conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
+                    .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(conteinerAgrupaButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                        .addComponent(lblCodigoId)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblValorProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                        .addComponent(txtCodigoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtValorProduto)))
+                .addContainerGap())
+            .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVoltarView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        conteinerAgrupaElementosFrameLayout.setVerticalGroup(
+            conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVoltarView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigoId)
                     .addComponent(lblDescricaoProduto)
                     .addComponent(lblValorProduto))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCodigoIdProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(txtDescricaoProduto)
+                    .addComponent(txtValorProduto))
                 .addGap(18, 18, 18)
-                .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(conteinerAgrupaButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblMensagemObs, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimpaCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlterarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(conteinerAgrupaElementosFrame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(conteinerAgrupaElementosFrame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(812, 635));
+        setSize(new java.awt.Dimension(888, 635));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -324,6 +347,18 @@ public class ViewProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirProdutoActionPerformed
 
     /**
+     * Metodo que recebe uma ação de clique em um botão, e ao usuario clicar, vai voltar para a tela principal do sistema, com, informações do usuario logado;
+     * 
+     * @param evt 
+     */
+    private void btnVoltarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarViewActionPerformed
+        //chamando a tela principal
+        ViewPrincipal p = new ViewPrincipal(this.userLogado);
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnVoltarViewActionPerformed
+
+    /**
      * Metodo que vai listar produtos cadastrados no banco de dados,na tabela da
      * view Produto, vai listar os produtos do banco de dados na tabela, da
      * interface da View Produto;
@@ -368,12 +403,12 @@ public class ViewProduto extends javax.swing.JFrame {
         this.lblCodigoId.setFont(spectral.deriveFont(Font.PLAIN, 18)); //codigoId
         this.lblDescricaoProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //descriçãoProduto
         this.lblValorProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //valorProduto
-        this.lblMensagemObs.setFont(spectral.deriveFont(Font.PLAIN, 18)); //mensagemObs
+       // this.lblMensagemObs.setFont(spectral.deriveFont(Font.PLAIN, 18)); //mensagemObs
         //setando a fonte nos botoes - estilo(constante e simples) tamanho(18)
-        btnSalvarProduto.setFont(spectral.deriveFont(Font.PLAIN, 20)); //botão salvar produto - tem tamanho maio para ter um destque
-        btnLimpaCampos.setFont(spectral.deriveFont(Font.PLAIN, 18)); //botão limpar componentes do formulario
-        btnAlterarProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //botão de alterar cadastro de um produto
-        btnExcluirProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //botão de excluir cadastro de um produto
+        btnSalvarProduto.setFont(spectral.deriveFont(Font.PLAIN, 16)); //botão salvar produto - tem tamanho maio para ter um destque
+        btnLimpaCampos.setFont(spectral.deriveFont(Font.PLAIN, 16)); //botão limpar componentes do formulario
+        btnAlterarProduto.setFont(spectral.deriveFont(Font.PLAIN, 16)); //botão de alterar cadastro de um produto
+        btnExcluirProduto.setFont(spectral.deriveFont(Font.PLAIN, 16)); //botão de excluir cadastro de um produto
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(spectral);
         this.setFont(spectral);
@@ -384,14 +419,14 @@ public class ViewProduto extends javax.swing.JFrame {
      * mensagem vai ser embutida em um html5 Puro, para criar uma formatação na
      * mensagem;
      */
-    private void setMensagemObs() {
+  /*  private void setMensagemObs() {
         this.lblMensagemObs.setText("<html><body>"
                 + "<p align =\"center\">"
                 + "Campos Marcados Com (*) São de Pre-Enchimento "
                 + "Obrigatório Para Prosseguir Com Sua Ação!"
                 + "</p>"
                 + "</body></html>");
-    }
+    }*/
 
     /**
      * Metodo que limpa campos do formulario, apos uma ação que deixou os campos
@@ -408,11 +443,12 @@ public class ViewProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluirProduto;
     private javax.swing.JButton btnLimpaCampos;
     private javax.swing.JButton btnSalvarProduto;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnVoltarView;
+    private javax.swing.JPanel conteinerAgrupaButtons;
+    private javax.swing.JPanel conteinerAgrupaElementosFrame;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodigoId;
     private javax.swing.JLabel lblDescricaoProduto;
-    private javax.swing.JLabel lblMensagemObs;
     private javax.swing.JLabel lblValorProduto;
     private javax.swing.JTable tblMostraProdutos;
     private javax.swing.JTextField txtCodigoIdProduto;

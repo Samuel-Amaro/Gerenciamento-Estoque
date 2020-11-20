@@ -19,15 +19,21 @@ import model.ModelUsuario;
 public class ViewUsuario extends javax.swing.JFrame {
 
     //variaveis essenciais
-    ModelUsuario userGlobal = new ModelUsuario();
-    List<ModelUsuario> listaUsuarios = new ArrayList<ModelUsuario>();
-    ControllerUsuario cp = new ControllerUsuario();
-    DefaultTableModel tblModeloPadrao;
-    Font fonteExterna = null;
+    private ModelUsuario userGlobal = new ModelUsuario();
+    private List<ModelUsuario> listaUsuarios = new ArrayList<ModelUsuario>();
+    private ControllerUsuario cp = new ControllerUsuario();
+    private DefaultTableModel tblModeloPadrao;
+    private Font fonteExterna = null;
+    private ModelUsuario usuarioLogado = new ModelUsuario();
     //variavel que vai controlar as opções de um usuario, CADASTRAR,ALTERAR, POR PADRÃO JA COMEÇA COM CADASTRO
-    String opcao = "CADASTRAR";
+    private String opcao = "CADASTRAR";
+    
 
-    public ViewUsuario() {
+    //costrutor padrão do frame, recebe um usuario logado
+    public ViewUsuario(ModelUsuario user) {
+        //usuario que esta logado no sistema
+        this.usuarioLogado = user;
+        //inicia componentes e elementos widgets do frame
         initComponents();
         //setando uma fonte padrão no frame
         setFontExterna();
@@ -35,39 +41,7 @@ public class ViewUsuario extends javax.swing.JFrame {
         listaUsuarios();
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new ViewUsuario().setVisible(true);
-        });
-    }
-
+   
     /**
      * Metodo que vai limpar os componestes do formulario, que vai estar sujo
      * com dados do usuario logado.
@@ -107,21 +81,24 @@ public class ViewUsuario extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        lblCodigoId = new javax.swing.JLabel();
-        lblNome = new javax.swing.JLabel();
-        lblLogin = new javax.swing.JLabel();
-        lblSenha = new javax.swing.JLabel();
+        conteinerAgrupaElementosJframe = new javax.swing.JPanel();
         txtCodigoId = new javax.swing.JTextField();
         txtNomeUser = new javax.swing.JTextField();
         txtLoginUser = new javax.swing.JTextField();
         txtSenhaUser = new javax.swing.JTextField();
-        btnSalvarCadUser = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         getTbllBancoDados = new javax.swing.JTable();
-        btnLimparDadosTela = new javax.swing.JButton();
+        conteinerButtons = new javax.swing.JPanel();
         btnAlterarDadosUser = new javax.swing.JButton();
+        btnLimparDadosTela = new javax.swing.JButton();
         btnExcluirDadosUser = new javax.swing.JButton();
+        btnSalvarCadUser = new javax.swing.JButton();
+        conteinerLabels = new javax.swing.JPanel();
+        lblCodigoId = new javax.swing.JLabel();
+        lblNome = new javax.swing.JLabel();
+        lblLogin = new javax.swing.JLabel();
+        lblSenha = new javax.swing.JLabel();
+        btnVoltarView = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,36 +117,9 @@ public class ViewUsuario extends javax.swing.JFrame {
         setTitle("Informações Usúarios");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(89, 106, 255));
-
-        lblCodigoId.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblCodigoId.setForeground(new java.awt.Color(102, 82, 11));
-        lblCodigoId.setText("CÓDIGO");
-
-        lblNome.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblNome.setForeground(new java.awt.Color(102, 82, 11));
-        lblNome.setText("NOME COMPLETO *");
-
-        lblLogin.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblLogin.setForeground(new java.awt.Color(102, 82, 11));
-        lblLogin.setText("LOGIN *");
-
-        lblSenha.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblSenha.setForeground(new java.awt.Color(102, 82, 11));
-        lblSenha.setText("SENHA *");
+        conteinerAgrupaElementosJframe.setBackground(new java.awt.Color(183, 183, 183));
 
         txtCodigoId.setEditable(false);
-
-        btnSalvarCadUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnSalvarCadUser.setForeground(new java.awt.Color(102, 82, 11));
-        btnSalvarCadUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/disquete-salvar-usuario-btn.png"))); // NOI18N
-        btnSalvarCadUser.setText("SALVAR");
-        btnSalvarCadUser.setPreferredSize(new java.awt.Dimension(48, 48));
-        btnSalvarCadUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarCadUserActionPerformed(evt);
-            }
-        });
 
         getTbllBancoDados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,19 +147,9 @@ public class ViewUsuario extends javax.swing.JFrame {
             getTbllBancoDados.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
-        btnLimparDadosTela.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnLimparDadosTela.setForeground(new java.awt.Color(102, 82, 11));
-        btnLimparDadosTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-limpar-btn-user.png"))); // NOI18N
-        btnLimparDadosTela.setText("LIMPAR");
-        btnLimparDadosTela.setPreferredSize(new java.awt.Dimension(48, 48));
-        btnLimparDadosTela.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparDadosTelaActionPerformed(evt);
-            }
-        });
+        conteinerButtons.setLayout(new java.awt.GridLayout());
 
         btnAlterarDadosUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnAlterarDadosUser.setForeground(new java.awt.Color(102, 82, 11));
         btnAlterarDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-editar-user-btn-user.png"))); // NOI18N
         btnAlterarDadosUser.setText("ALTERAR");
         btnAlterarDadosUser.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -218,9 +158,20 @@ public class ViewUsuario extends javax.swing.JFrame {
                 btnAlterarDadosUserActionPerformed(evt);
             }
         });
+        conteinerButtons.add(btnAlterarDadosUser);
+
+        btnLimparDadosTela.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnLimparDadosTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-limpar-btn-user.png"))); // NOI18N
+        btnLimparDadosTela.setText("LIMPAR");
+        btnLimparDadosTela.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnLimparDadosTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparDadosTelaActionPerformed(evt);
+            }
+        });
+        conteinerButtons.add(btnLimparDadosTela);
 
         btnExcluirDadosUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        btnExcluirDadosUser.setForeground(new java.awt.Color(102, 82, 11));
         btnExcluirDadosUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-excluir-user-btn-user.png"))); // NOI18N
         btnExcluirDadosUser.setText("EXCLUIR");
         btnExcluirDadosUser.setPreferredSize(new java.awt.Dimension(48, 48));
@@ -229,79 +180,101 @@ public class ViewUsuario extends javax.swing.JFrame {
                 btnExcluirDadosUserActionPerformed(evt);
             }
         });
+        conteinerButtons.add(btnExcluirDadosUser);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        btnSalvarCadUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnSalvarCadUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/disquete-salvar-usuario-btn.png"))); // NOI18N
+        btnSalvarCadUser.setText("SALVAR");
+        btnSalvarCadUser.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnSalvarCadUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCadUserActionPerformed(evt);
+            }
+        });
+        conteinerButtons.add(btnSalvarCadUser);
+
+        conteinerLabels.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblCodigoId.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblCodigoId.setText("CÓDIGO");
+        conteinerLabels.add(lblCodigoId, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 0, 70, -1));
+
+        lblNome.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblNome.setText("* NOME COMPLETO");
+        conteinerLabels.add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 0, 290, -1));
+
+        lblLogin.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblLogin.setText("* LOGIN");
+        conteinerLabels.add(lblLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 0, 200, -1));
+
+        lblSenha.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblSenha.setText("* SENHA");
+        conteinerLabels.add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(619, 0, 170, -1));
+
+        btnVoltarView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-voltar-view.png"))); // NOI18N
+        btnVoltarView.setPreferredSize(new java.awt.Dimension(32, 32));
+        btnVoltarView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarViewActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout conteinerAgrupaElementosJframeLayout = new javax.swing.GroupLayout(conteinerAgrupaElementosJframe);
+        conteinerAgrupaElementosJframe.setLayout(conteinerAgrupaElementosJframeLayout);
+        conteinerAgrupaElementosJframeLayout.setHorizontalGroup(
+            conteinerAgrupaElementosJframeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteinerAgrupaElementosJframeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalvarCadUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCodigoId)
-                            .addComponent(lblCodigoId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNomeUser, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtLoginUser, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                            .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSenhaUser)
-                            .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(conteinerAgrupaElementosJframeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(conteinerLabels, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(conteinerButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnLimparDadosTela, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                        .addComponent(btnAlterarDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                        .addComponent(btnExcluirDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(conteinerAgrupaElementosJframeLayout.createSequentialGroup()
+                        .addComponent(txtCodigoId, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNomeUser)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtLoginUser, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSenhaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, conteinerAgrupaElementosJframeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVoltarView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigoId)
-                    .addComponent(lblNome)
-                    .addComponent(lblLogin)
-                    .addComponent(lblSenha))
+        conteinerAgrupaElementosJframeLayout.setVerticalGroup(
+            conteinerAgrupaElementosJframeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteinerAgrupaElementosJframeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVoltarView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(conteinerLabels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtLoginUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSenhaUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(conteinerAgrupaElementosJframeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNomeUser, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(txtLoginUser)
+                    .addComponent(txtSenhaUser)
+                    .addComponent(txtCodigoId))
                 .addGap(18, 18, 18)
-                .addComponent(btnSalvarCadUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(conteinerButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimparDadosTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlterarDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirDadosUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(conteinerAgrupaElementosJframe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(conteinerAgrupaElementosJframe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(816, 556));
+        setSize(new java.awt.Dimension(824, 620));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -428,6 +401,19 @@ public class ViewUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarDadosUserActionPerformed
 
     /**
+     * Usuario vai clicar nesse botão, vai poder voltar para a interface principal;
+     * trasmitindo informações de uma interface para a outra, atrves do usuario logado;
+     * pega informações de um usuario logado e manda essa informação para a outra frame;
+     * @param evt de clique no botão
+     */
+    private void btnVoltarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarViewActionPerformed
+       //vai voltar para a tela principal
+       ViewPrincipal framePrincipal = new ViewPrincipal(this.usuarioLogado);
+       framePrincipal.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_btnVoltarViewActionPerformed
+
+    /**
      * Metodo que seta uma fonte externa no frame por completo, nos componentes
      * e tudo que ele agrupa; Fonte externa usada nesse frame do USUARIO:
      * PlayfairDisplay-ExtraBold.ttf
@@ -460,8 +446,11 @@ public class ViewUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluirDadosUser;
     private javax.swing.JButton btnLimparDadosTela;
     private javax.swing.JButton btnSalvarCadUser;
+    private javax.swing.JButton btnVoltarView;
+    private javax.swing.JPanel conteinerAgrupaElementosJframe;
+    private javax.swing.JPanel conteinerButtons;
+    private javax.swing.JPanel conteinerLabels;
     private javax.swing.JTable getTbllBancoDados;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
