@@ -41,7 +41,7 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DE PRODUTOS CADASTRO, ALTERAÇÃO, EXCLUSÃO**
  
  
- ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/Nova-prototipacao/prototipo-interface-usuario.png)
+ ![Tela Produtos](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/Nova-prototipacao/prototipo-interface-produtos.png)
  * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DO ESTOQUE, ONDE REGISTRA AS MOVIMENTAÇÕES DE ENTRADA E SAIDA DO ESTOQUE**
  
  
