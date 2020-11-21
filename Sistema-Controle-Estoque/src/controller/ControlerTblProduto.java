@@ -88,4 +88,22 @@ public class ControlerTblProduto {
                return false;
         }
     }
+    /**
+     * Metodo que faz verificações antes de excluir um produto;
+     * @param idProduto
+     * @return 
+     */
+    public boolean controlerExcluirProduto(int idProduto) {
+        if(idProduto > 0) {
+          this.daoProduto = new DaoTblProduto();
+          try{
+              return this.daoProduto.daoExcluirProduto(idProduto);
+          }catch(SQLException ex) {
+                  System.out.println("erro na exclusão de um produto : " + ex);
+                  return false;
+          }
+        }else{
+             return false;
+        }
+    }
 }

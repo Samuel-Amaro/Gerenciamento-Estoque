@@ -23,7 +23,7 @@ public class ViewProduto extends javax.swing.JFrame {
     private DefaultTableModel tblModeloPadrao;
     private List<ModelProduto> listaProdutos;
     private String controlaOpcaoUsuario = "";
-    private ModelUsuario userLogado = new ModelUsuario(); 
+    private ModelUsuario userLogado = new ModelUsuario();
 
     public ViewProduto(ModelUsuario user) {
         //usuario logado no sistema
@@ -32,7 +32,7 @@ public class ViewProduto extends javax.swing.JFrame {
         initComponents();
         //metodo abaixo seta uma fonte externa padrão no frame
         setFonteExterna();
-       // setMensagemObs();
+        // setMensagemObs();
         //mostra produtos ja cadastrados no banco de dados
         listaProdutosTbl();
         this.controlaOpcaoUsuario = "CADASTRAR";
@@ -120,6 +120,11 @@ public class ViewProduto extends javax.swing.JFrame {
         btnLimpaCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-limpeza-btn-produto.png"))); // NOI18N
         btnLimpaCampos.setText("LIMPAR");
         btnLimpaCampos.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnLimpaCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpaCamposActionPerformed(evt);
+            }
+        });
 
         btnAlterarProduto.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnAlterarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-alterar-produ-btn.png"))); // NOI18N
@@ -304,8 +309,8 @@ public class ViewProduto extends javax.swing.JFrame {
 
                 }
                 break;
-                default:
-                       JOptionPane.showMessageDialog(this,"Opção Invalida","Opção Invalida",JOptionPane.WARNING_MESSAGE);
+            default:
+                JOptionPane.showMessageDialog(this, "Opção Invalida", "Opção Invalida", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_btnSalvarProdutoActionPerformed
@@ -342,14 +347,44 @@ public class ViewProduto extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnAlterarProdutoActionPerformed
-
+    /**
+     * Ao usuario clicar nese botão vai excluir um produto cadastrado;
+     *
+     * @param evt
+     */
     private void btnExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProdutoActionPerformed
+        // COMO SABER QUAL PRODUTO VOU EXCLUIR ?
+        // APOS USUARIO SELECIONAR UM LINHA DA JTABLE ONDE TEM UM PRODUTO CADASTRADO
+        //OBTENDO LINHA SELECIONADA
+        int linhaSelecionada = this.tblMostraProdutos.getSelectedRow();
+        //se a linha for negativa selecionou nenhuma linha 
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "SELECIONE UM PRODUTO PARA SER EXCLUIDO", "EXCLUSÃO PRODUTO", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //se o usuario selecionou uma linha na tabela, eu vou pegar os dados das colunas que essa linha possui, na tabela
+            //a tabela possui 3 colunas | CODIGO == 0,DESCRIÇÃO PRODUTO == 1, VALOR == 2 | AS COLUNAS ESTÃO INDEXADAS, PARA PODEREM SER ACESSADAS, essas colunas estão  visualmente faceis de ver na View
+            int colunaCodigo = 0, colunaDescricaoProduto = 1, colunaValor = 2;
+            //obtendo valor da linha selecionada, e coluna que o programador informa para obter o valor especifico que deseja
+            int codigoProduto = (int) this.tblMostraProdutos.getValueAt(linhaSelecionada, colunaCodigo);
+            //chamando metodo de excluir produto
+            this.controlaProduto = new ControlerTblProduto();
+            if (this.controlaProduto.controlerExcluirProduto(codigoProduto)) {
+                JOptionPane.showMessageDialog(this, "Exclusão de produto ocorrida com sucesso!", "EXLUIR PRODUTO", JOptionPane.INFORMATION_MESSAGE);
+                //mostra a tabela da view atualizada 
+                this.listaProdutosTbl();
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocorreu um erro ao excluir produto!", "EXLUIR PRODUTO", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
     }//GEN-LAST:event_btnExcluirProdutoActionPerformed
 
     /**
-     * Metodo que recebe uma ação de clique em um botão, e ao usuario clicar, vai voltar para a tela principal do sistema, com, informações do usuario logado;
-     * 
-     * @param evt 
+     * Metodo que recebe uma ação de clique em um botão, e ao usuario clicar,
+     * vai voltar para a tela principal do sistema, com, informações do usuario
+     * logado;
+     *
+     * @param evt
      */
     private void btnVoltarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarViewActionPerformed
         //chamando a tela principal
@@ -357,6 +392,19 @@ public class ViewProduto extends javax.swing.JFrame {
         p.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnVoltarViewActionPerformed
+
+    /**
+     * Ao usuario clicar nesse botão, ele vai limpar as caixas de texto, e a
+     * tabela de protudos na view;
+     *
+     * @param evt
+     */
+    private void btnLimpaCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaCamposActionPerformed
+        //limpando os campos do formulario
+        this.limpaCamposView();
+        //limpando a tabela
+        this.tblModeloPadrao.setNumRows(0);
+    }//GEN-LAST:event_btnLimpaCamposActionPerformed
 
     /**
      * Metodo que vai listar produtos cadastrados no banco de dados,na tabela da
@@ -403,7 +451,7 @@ public class ViewProduto extends javax.swing.JFrame {
         this.lblCodigoId.setFont(spectral.deriveFont(Font.PLAIN, 18)); //codigoId
         this.lblDescricaoProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //descriçãoProduto
         this.lblValorProduto.setFont(spectral.deriveFont(Font.PLAIN, 18)); //valorProduto
-       // this.lblMensagemObs.setFont(spectral.deriveFont(Font.PLAIN, 18)); //mensagemObs
+        // this.lblMensagemObs.setFont(spectral.deriveFont(Font.PLAIN, 18)); //mensagemObs
         //setando a fonte nos botoes - estilo(constante e simples) tamanho(18)
         btnSalvarProduto.setFont(spectral.deriveFont(Font.PLAIN, 16)); //botão salvar produto - tem tamanho maio para ter um destque
         btnLimpaCampos.setFont(spectral.deriveFont(Font.PLAIN, 16)); //botão limpar componentes do formulario
@@ -419,7 +467,7 @@ public class ViewProduto extends javax.swing.JFrame {
      * mensagem vai ser embutida em um html5 Puro, para criar uma formatação na
      * mensagem;
      */
-  /*  private void setMensagemObs() {
+    /*  private void setMensagemObs() {
         this.lblMensagemObs.setText("<html><body>"
                 + "<p align =\"center\">"
                 + "Campos Marcados Com (*) São de Pre-Enchimento "
@@ -427,7 +475,6 @@ public class ViewProduto extends javax.swing.JFrame {
                 + "</p>"
                 + "</body></html>");
     }*/
-
     /**
      * Metodo que limpa campos do formulario, apos uma ação que deixou os campos
      * com varios dados;

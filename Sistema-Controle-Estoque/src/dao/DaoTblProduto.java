@@ -140,5 +140,23 @@ public class DaoTblProduto extends ConexaoSqLite {
            return false;
        }
     }
+    /**
+     * Metodo que exclui um produto do banco de dados
+     * @param idProduto
+     * @return 
+     * @throws java.sql.SQLException lança exceção para quem chamar o metodo tratar a exceção
+     */
+    public boolean daoExcluirProduto(int idProduto) throws SQLException {
+        String sqlDelete = "DELETE FROM tbl_produto WHERE pk_codigo_produto = " + idProduto;
+        this.conexaoBanco = conectaBanco();
+        this.preparaSql = this.conexaoBanco.prepareStatement(sqlDelete);
+        int resultado = this.preparaSql.executeUpdate();
+        //excluiu uma linha do banco de dados
+        if(resultado > 0) {
+            return true;
+        }else{
+             return false;    
+        }
+    }
 
 }
