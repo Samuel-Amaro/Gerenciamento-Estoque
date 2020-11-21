@@ -45,4 +45,4 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DO ESTOQUE, ONDE REGISTRA AS MOVIMENTAÇÕES DE ENTRADA E SAIDA DO ESTOQUE**
  
  
-  ![Tela Estoque](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-estoque.png)
+  ![Tela Estoque](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/Nova-prototipacao/interface-view-estoque.png)
