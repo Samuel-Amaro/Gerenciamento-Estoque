@@ -139,15 +139,18 @@ public class DaoTblEstoque extends ConexaoSqLite {
     /**
      * Metodo que vai buscar na tabela estoque, a quantidade de entrada e saida
      * de um respectivo produto; tras a soma total da quantidade que um produto
-     * entrou ou saiu do estoque
-     *
+     * entrou ou saiu do estoque;
+     * Metodo generelista que traz a quantidade de entrada de um produto;
+     * ou so traz a quantidade de saida de um produto;
+     * especificar a movimentação no metodo e o produto;
+     * resumo = quantos produtos entraram | e quantos produtos sairam; sem se importar com data, ou o usuario que efetuou;
      * @param tipoMovimentacao
      * @param idProduto
      * @return int quantidade movimentacao
      * @throws java.sql.SQLException quem chama trata a exceção
      */
     public Integer daoContaMovimentacao(int tipoMovimentacao, int idProduto) throws SQLException {
-        String dqlSelect = "SELECT SUM(quantidade_estoque) AS qtd_Movimentacao \n"
+        String dqlSelect = "SELECT SUM(quantidade_estoque) AS qtd_Produto_Movimentação \n"
                 + "  FROM tbl_estoque\n"
                 + "  WHERE fk_produto = " + idProduto + " AND tipo_movimentacao_estoque = " + tipoMovimentacao + ";";
 
@@ -155,15 +158,85 @@ public class DaoTblEstoque extends ConexaoSqLite {
         this.preparaSql = this.conexaoBanco.prepareStatement(dqlSelect);
         this.resultadoSql = this.preparaSql.executeQuery();
         if (this.resultadoSql.next()) {
-            this.preparaSql.close();
-            int qtd = this.resultadoSql.getInt(1);
+            //this.preparaSql.close();
+            int qtd_produto_movimentacao = this.resultadoSql.getInt(1);
             this.resultadoSql.close();
             this.preparaSql.close();
-            return qtd;
+            return qtd_produto_movimentacao;
         } else {
             this.resultadoSql.close();
             this.preparaSql.close();
             return -1;
         }
+        
     }
+    
+     /**
+     * metodo que vai trazer todas as movimentações de estoque de todos usuarios
+     *
+     * @return uma array list com todas os obejtos de movimentações armazenados no array
+     * @throws java.sql.SQLException
+     */
+    public List<ModelEstoque> daoGetEstoques() throws SQLException {
+        String dmlSelect = "SELECT pk_codigo_estoque,"
+                + "quantidade_estoque,"
+                + "preco_estoque,"
+                + "tipo_movimentacao_estoque,"
+                + "data_estoque,"
+                + "fk_usuario,"
+                + "fk_produto "
+                + "FROM tbl_estoque;";
+        this.conexaoBanco = conectaBanco();
+        this.preparaSql = this.conexaoBanco.prepareStatement(dmlSelect);
+        //executa consulta
+        this.resultadoSql = this.preparaSql.executeQuery();
+        //enquanto tiver linhas do banco de dados com dados vai iterar sobre o resultSet
+        this.listaEstoque = new ArrayList<>();
+        while (resultadoSql.next()) {
+            this.estoque = new ModelEstoque();
+            this.estoque.setId_pk(this.resultadoSql.getInt(1));
+            this.estoque.setQuantidade(this.resultadoSql.getInt(2));
+            this.estoque.setPreco(this.resultadoSql.getDouble(3));
+            this.estoque.setTipo_movimentacao(this.resultadoSql.getInt(4));
+            this.estoque.setDataMovimentacao(this.resultadoSql.getString(5));
+            this.estoque.setFk_usuario(this.resultadoSql.getInt(6));
+            this.estoque.setFk_produto(this.resultadoSql.getInt(7));
+            this.listaEstoque.add(estoque);
+        }
+        this.preparaSql.close();
+        this.resultadoSql.close();
+        return this.listaEstoque;
+    }
+    
+    /**
+     * Metodo que busca os detalhes e infomações de um produto, atraves de seu id informado;
+     * @param idProduto
+     * @return 
+     * @throws java.sql.SQLException 
+     */
+    public ModelProduto daoGetDetalhesProduto(int idProduto) throws SQLException {
+        String dqlWhere = "SELECT "
+                        + "pk_codigo_produto,"
+                        + "descricao,"
+                        + "valor "
+                        + "FROM tbl_produto "
+                        + "WHERE pk_codigo_produto = " + idProduto;
+        this.conexaoBanco = conectaBanco();
+        this.preparaSql = this.conexaoBanco.prepareStatement(dqlWhere);
+        //executa consulta
+        this.resultadoSql = this.preparaSql.executeQuery();
+        //se o select trouxe algum resultado
+        if(this.resultadoSql.next()) {
+            this.produto = new ModelProduto();
+            this.produto.setIdProduto(this.resultadoSql.getInt(1));
+            this.produto.setDescricaoProduto(this.resultadoSql.getString(2));
+            this.produto.setValorProduto(this.resultadoSql.getDouble(3));
+            this.preparaSql.close();
+            this.resultadoSql.close();
+            return this.produto;
+        }else{
+            return null;
+        }
+    }
+
 }

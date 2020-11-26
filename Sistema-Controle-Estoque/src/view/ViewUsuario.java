@@ -408,7 +408,7 @@ public class ViewUsuario extends javax.swing.JFrame {
      */
     private void btnVoltarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarViewActionPerformed
        //vai voltar para a tela principal
-       ViewPrincipal framePrincipal = new ViewPrincipal(this.usuarioLogado);
+       ViewPrincipalResponsiva framePrincipal = new ViewPrincipalResponsiva(this.usuarioLogado);
        framePrincipal.setVisible(true);
        dispose();
     }//GEN-LAST:event_btnVoltarViewActionPerformed

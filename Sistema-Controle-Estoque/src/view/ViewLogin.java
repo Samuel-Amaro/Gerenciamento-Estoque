@@ -154,9 +154,12 @@ public class ViewLogin extends javax.swing.JFrame {
             this.controleUsuario = new ControllerUsuario();
             this.usuario =  this.controleUsuario.controlerAutenticarUsuarioLogin(this.txtLogin.getText(),new String(this.jpfTxtSenha.getPassword()));    
             if(this.usuario != null) {
-                ViewPrincipal telaPrincipalSistema = new ViewPrincipal(usuario);
-                telaPrincipalSistema.setVisible(true);
+                ViewPrincipalResponsiva telaPrincipal = new ViewPrincipalResponsiva(usuario);
+                telaPrincipal.setVisible(true);
                 dispose();
+                //ViewPrincipal telaPrincipalSistema = new ViewPrincipal(usuario);
+                //telaPrincipalSistema.setVisible(true);
+                //dispose();
                // JOptionPane.showMessageDialog(this,"Logado Com Sucesso!","Login Efetuado Com Sucesso",JOptionPane.INFORMATION_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(this,"Usuario e Senha Não Cadastrados!","Erro ao Fazer Logon",JOptionPane.ERROR_MESSAGE);

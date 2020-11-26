@@ -51,16 +51,16 @@ public class ViewEstoque extends javax.swing.JFrame {
         spQtd = new javax.swing.JSpinner();
         lblValorProd = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtPesquisaEstoque = new javax.swing.JTextField();
         lblPesqEstoque = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cbFiltroPesquisa = new javax.swing.JComboBox<>();
         lblFilterPesquisa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaMostraMovimentacao = new javax.swing.JTable();
         btnSalvarMovim = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         gerarRelatorioMov = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Movimentação Estoque");
@@ -94,7 +94,7 @@ public class ViewEstoque extends javax.swing.JFrame {
         lblPesqEstoque.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblPesqEstoque.setText("PESQUISA NO ESTOQUE");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha um Filtro de Pesquisa", "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFiltroPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha um Filtro de Pesquisa", "NOME PRODUTO", "DATA", "MOVIMENTAÇÃO" }));
 
         lblFilterPesquisa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblFilterPesquisa.setText("ESCOLHA UM FILTRO ABAIXO");
@@ -137,6 +137,11 @@ public class ViewEstoque extends javax.swing.JFrame {
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/pesquisar-btn.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         gerarRelatorioMov.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/pdf-report.png"))); // NOI18N
         gerarRelatorioMov.setText("Gerar Relatorio Estoque");
@@ -147,9 +152,14 @@ public class ViewEstoque extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-voltar-view.png"))); // NOI18N
-        jButton1.setToolTipText("VOLTAR INTERFACE PRINCIPAL");
-        jButton1.setPreferredSize(new java.awt.Dimension(32, 32));
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/icone-voltar-view.png"))); // NOI18N
+        btnVoltar.setToolTipText("VOLTAR INTERFACE PRINCIPAL");
+        btnVoltar.setPreferredSize(new java.awt.Dimension(32, 32));
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout conteinerAgrupaElementosFrameLayout = new javax.swing.GroupLayout(conteinerAgrupaElementosFrame);
         conteinerAgrupaElementosFrame.setLayout(conteinerAgrupaElementosFrameLayout);
@@ -177,7 +187,7 @@ public class ViewEstoque extends javax.swing.JFrame {
                                     .addComponent(lblValorProd, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                                     .addComponent(txtPreco))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSalvarMovim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -191,14 +201,14 @@ public class ViewEstoque extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(lblPesqEstoque))
                             .addComponent(cbDescriProd, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPesquisaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                                 .addGap(105, 105, 105)
-                                .addComponent(jComboBox3, 0, 300, Short.MAX_VALUE)))))
+                                .addComponent(cbFiltroPesquisa, 0, 300, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         conteinerAgrupaElementosFrameLayout.setVerticalGroup(
@@ -221,21 +231,21 @@ public class ViewEstoque extends javax.swing.JFrame {
                             .addComponent(btnSalvarMovim)))
                     .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDescricaoProd)
                     .addComponent(lblFilterPesquisa))
                 .addGap(18, 18, 18)
-                .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbDescriProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbDescriProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltroPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                         .addComponent(lblPesqEstoque)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquisaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                         .addComponent(jButton4)
@@ -269,6 +279,10 @@ public class ViewEstoque extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTipoMovActionPerformed
 
+    /**
+     * Ao usuario clicar no botão salvar, ele vai poder salvar uma movimentação no estoque, como de entrada como de saida do estoquer;
+     * @param evt 
+     */
     private void btnSalvarMovimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarMovimActionPerformed
         this.controlEstoque = new ControlerTblEstoque();
         this.estoque = new ModelEstoque();
@@ -294,14 +308,34 @@ public class ViewEstoque extends javax.swing.JFrame {
             }
         }
         this.estoque.setFk_produto(idProduto);
+        //apos acima obter todos os dados do formulario, eu mando para o controler, ver se a operação e valida
         if (this.controlEstoque.controlerAddMovEstoque(estoque)) {
             JOptionPane.showMessageDialog(this, "MOVIMENTAÇÃO NO ESTOQUE EFETUADA COM SUCESSO", "MOVIMENTAÇÃO ESTOQUE", JOptionPane.INFORMATION_MESSAGE);
+            //limpa campos do formulario
+            limpaCampos();
+            //System.out.println(this.controlEstoque.controlerContaMovimentacao(idProduto,0));
             //mostra estoque atualizado com a operação finalizada
             this.carregaMovimentacoesEstoque();
         } else {
             JOptionPane.showMessageDialog(this,"PREENCHA OS CAMPOS CORRETAMENTE","MOVIMENTAÇÃO ESTOQUE",JOptionPane.ERROR_MESSAGE);
+            limpaCampos();
         }
     }//GEN-LAST:event_btnSalvarMovimActionPerformed
+
+    /**
+     * ao usuario clicar nesse botão, vai poder voltar para a interface principal do sistema;
+     * @param evt 
+     */
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+       ViewPrincipalResponsiva p = new ViewPrincipalResponsiva(this.usuarioLogado);
+       p.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String filtroBusca = (String) this.cbFiltroPesquisa.getSelectedItem();
+        String textoPesquisa = this.txtPesquisaEstoque.getText();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 /**
  * metodo que popula um jcomb box com a descrição de todos os produtos
@@ -378,17 +412,27 @@ private void listDescricaoProdutos() {
                 });
         }
     }
+    
+    /**
+     * Metodo que limpa campos do formulario
+     */
+    private void limpaCampos() {
+        spQtd.setValue(1);
+        txtPreco.setText(null);
+        cbDescriProd.setSelectedItem("Escolha a Descrição Do Produto");
+        txtPesquisaEstoque.setText(null);
+        cbFiltroPesquisa.setSelectedItem("Escolha um Filtro de Pesquisa");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvarMovim;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cbDescriProd;
+    private javax.swing.JComboBox<String> cbFiltroPesquisa;
     private javax.swing.JComboBox<String> cbTipoMov;
     private javax.swing.JPanel conteinerAgrupaElementosFrame;
     private javax.swing.JButton gerarRelatorioMov;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblDescricaoProd;
     private javax.swing.JLabel lblFilterPesquisa;
     private javax.swing.JLabel lblPesqEstoque;
@@ -397,6 +441,7 @@ private void listDescricaoProdutos() {
     private javax.swing.JLabel lblValorProd;
     private javax.swing.JSpinner spQtd;
     private javax.swing.JTable tabelaMostraMovimentacao;
+    private javax.swing.JTextField txtPesquisaEstoque;
     private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 }

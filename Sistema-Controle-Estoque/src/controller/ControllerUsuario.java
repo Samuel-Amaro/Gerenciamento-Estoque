@@ -50,6 +50,7 @@ public class ControllerUsuario {
    * @return Usuario, se ele existe
    */
   public ModelUsuario controlerBuscaUsuario(int codigoUser) {
+    this.user = new DAOUsuario();
     //verifico se o usuario realmente existe no banco, vendo a validação dele aqui no controler
      if(this.user.daoBuscarUsuario(codigoUser) != null) {
          usuario = new ModelUsuario();

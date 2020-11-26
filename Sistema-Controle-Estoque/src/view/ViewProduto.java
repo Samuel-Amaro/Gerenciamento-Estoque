@@ -185,10 +185,6 @@ public class ViewProduto extends javax.swing.JFrame {
                 .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
                     .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(conteinerAgrupaButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
                         .addComponent(lblCodigoId)
                         .addGap(18, 18, 18)
                         .addComponent(lblDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,12 +195,16 @@ public class ViewProduto extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtValorProduto)))
+                        .addComponent(txtValorProduto))
+                    .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(conteinerAgrupaButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
+                                .addGap(378, 378, 378)
+                                .addComponent(btnVoltarView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(conteinerAgrupaElementosFrameLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVoltarView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         conteinerAgrupaElementosFrameLayout.setVerticalGroup(
             conteinerAgrupaElementosFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +388,7 @@ public class ViewProduto extends javax.swing.JFrame {
      */
     private void btnVoltarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarViewActionPerformed
         //chamando a tela principal
-        ViewPrincipal p = new ViewPrincipal(this.userLogado);
+        ViewPrincipalResponsiva p = new ViewPrincipalResponsiva(this.userLogado);
         p.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnVoltarViewActionPerformed
