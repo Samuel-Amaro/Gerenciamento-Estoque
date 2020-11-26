@@ -33,7 +33,7 @@ Sistema para controle e Gerenciamento de Estoque de qualquer Segmento Comercial 
  * **PREVIEW DA INTERFACE PRINCIPAL DO SISTEMA**
  
  
- ![Tela Principal](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/Prototipos-Telas/prototipos-interfaces/prototipo-interface-principal.png)
+ ![Tela Principal](https://github.com/Samuel-Amaro/Gerenciamento-Estoque/blob/master/videos-para-gif-readme/video-view-principal-responsiva.gif)
  * **PREVIEW DA INTERFACE DE MANIPULAÇÃO DE USUARIOS DO SISTEMA**
  
  
