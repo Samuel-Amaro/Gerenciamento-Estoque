@@ -52,11 +52,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="gerarRelatorioMov" min="-2" pref="331" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblDescricaoProd" min="-2" pref="359" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="lblDescricaoProd" alignment="0" min="-2" pref="359" max="-2" attributes="0"/>
+                              <Component id="cbDescriProd" alignment="0" min="-2" pref="359" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="lblTipoMov" max="32767" attributes="0"/>
@@ -72,39 +74,12 @@
                                       <Component id="lblValorProd" pref="102" max="32767" attributes="0"/>
                                       <Component id="txtPreco" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="34" max="32767" attributes="0"/>
                                   <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnSalvarMovim" max="32767" attributes="0"/>
-                              <Component id="lblFilterPesquisa" pref="300" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="gerarRelatorioMov" min="-2" pref="331" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                  <Component id="lblPesqEstoque" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="cbDescriProd" alignment="0" min="-2" pref="359" max="-2" attributes="0"/>
-                              <Component id="txtPesquisaEstoque" min="-2" pref="383" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jButton4" min="-2" pref="194" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                                  <Component id="cbFiltroPesquisa" pref="300" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace pref="39" max="32767" attributes="0"/>
+                          <Component id="btnSalvarMovim" min="-2" pref="300" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -135,34 +110,16 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblDescricaoProd" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblFilterPesquisa" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lblDescricaoProd" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cbDescriProd" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbFiltroPesquisa" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="cbDescriProd" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lblPesqEstoque" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtPesquisaEstoque" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="34" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="jScrollPane1" min="-2" pref="242" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="331" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="gerarRelatorioMov" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -200,6 +157,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="ESCOLHA PRODUTO ABAIXO PELA DESCRI&#xc7;&#xc3;O"/>
           </Properties>
         </Component>
@@ -235,43 +193,11 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="VALOR"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPreco">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtPesquisaEstoque">
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblPesqEstoque">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="PESQUISA NO ESTOQUE"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cbFiltroPesquisa">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Escolha um Filtro de Pesquisa"/>
-                <StringItem index="1" value="NOME PRODUTO"/>
-                <StringItem index="2" value="DATA"/>
-                <StringItem index="3" value="MOVIMENTA&#xc7;&#xc3;O"/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblFilterPesquisa">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="ESCOLHA UM FILTRO ABAIXO"/>
-          </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -342,16 +268,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarMovimActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagens_icones/pesquisar-btn.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="gerarRelatorioMov">

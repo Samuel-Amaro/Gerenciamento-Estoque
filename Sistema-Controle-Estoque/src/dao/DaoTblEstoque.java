@@ -256,5 +256,33 @@ public class DaoTblEstoque extends ConexaoSqLite {
             return null;
         }
     }
+    
+    /**
+     * Metodo que faz a pesquisa na tabela de estoque, usando filtrages especifica pelo que o usuario solicitou
+     * @param filtroPesquisa
+     * @param valorFiltro
+     * @return 
+     */
+    public List<ModelEstoque> daoBuscarEstoque(String filtroPesquisa,String valorFiltro) {
+       this.conexaoBanco = conectaBanco();
+       this.listaEstoque = new ArrayList<>();
+        switch(filtroPesquisa) {
+           case "ANO":
+                String dqlAno = "SELECT pk_codigo_estoque," +
+                                "quantidade_estoque," +
+                                "preco_estoque," +
+                                "tipo_movimentacao_estoque," +
+                                "data_estoque," +
+                                "fk_usuario," +
+                                "fk_produto," +
+                                //"tbl_produto.descricao"
+                                " FROM tbl_estoque" + 
+                                " INNER JOIN tbl_produto" + 
+                                " ON tbl_estoque.fk_produto = tbl_produto.pk_codigo_produto" + 
+                                "WHERE STRFTIME('%Y',tbl_estoque.data_estoque) = CAST(" + valorFiltro + " AS TEXT);";
+                
+       }
+       return null;
+    }
 
 }

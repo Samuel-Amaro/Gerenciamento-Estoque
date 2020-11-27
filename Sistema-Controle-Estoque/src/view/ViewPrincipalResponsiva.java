@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -388,9 +389,14 @@ public class ViewPrincipalResponsiva extends javax.swing.JFrame {
 
         conteinerBotao05.setBackground(new java.awt.Color(15, 19, 52));
 
-        botaoLicencaSistemaVersionInformation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/licenciamento.png"))); // NOI18N
+        botaoLicencaSistemaVersionInformation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens_icones/iconfinder_gnu_4691330.png"))); // NOI18N
         botaoLicencaSistemaVersionInformation.setToolTipText("LICENÇA USADA");
         botaoLicencaSistemaVersionInformation.setPreferredSize(new java.awt.Dimension(32, 32));
+        botaoLicencaSistemaVersionInformation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoLicencaSistemaVersionInformationActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout conteinerBotao05Layout = new javax.swing.GroupLayout(conteinerBotao05);
         conteinerBotao05.setLayout(conteinerBotao05Layout);
@@ -690,6 +696,16 @@ public class ViewPrincipalResponsiva extends javax.swing.JFrame {
         gerenciarProduto.setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoProdutosSistemaActionPerformed
+
+    /***
+     * Usuario clicou no icone de licença do softaware;
+     * ao clicar nesse icone vai abrir um caixa de mensagem dando duas opções, mostrando o nome da licença sob qual o software esta licenciado, e um link para poder ler mais sobre a licença;
+     * @param evt 
+     */
+    private void botaoLicencaSistemaVersionInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLicencaSistemaVersionInformationActionPerformed
+        ViewLicence l = new ViewLicence();
+        l.setVisible(true);
+    }//GEN-LAST:event_botaoLicencaSistemaVersionInformationActionPerformed
 
     /**
      * De acorodo com um numero logico vindo por paramentro, vou setar novas cores de fundo, nos conteiner informados por parametro, tudo isso ocorrendo enquanto o usuario clica no menu hamburguer;
